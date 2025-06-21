@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SmartHotels</title>
+  <link rel="icon" type="image/png" href="assets/ai-icon.png">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+</head>
+<body>
+  <div id="particles-js"></div>
+
+  <div class="floating-chat">
+    <button id="chatButton" class="chat-button">
+      <img src="assets/ai-icon.png" alt="Asistente IA" class="chat-icon">
+    </button>
+    <div id="chatBubble" class="chat-bubble">¿Necesitas ayuda con tu hotel?<br>¡Chatea con nuestra IA!</div>
+  </div>
+
+  <div id="chatModal" class="chat-modal">
+    <div class="chat-modal-content">
+      <div class="chat-header">
+        <h3><img src="assets/ai-icon.png" alt="AI Icon">SmartHotels IA</h3>
+        <button id="closeChat" class="close-button">&times;</button>
+      </div>
+      <div id="chatMessages" class="chat-messages"></div>
+      <div class="chat-input-container">
+        <input type="text" id="chatInput" placeholder="Escribe tu pregunta aquí..." maxlength="500">
+        <button id="sendMessage">Enviar</button>
+      </div>
+    </div>
+  </div>
+
+  <header class="main-header">
+    <nav class="nav-container">
+      <a href="#about" class="nav-button">Nosotros</a>
+      <a href="#services" class="nav-button">Servicios</a>
+      <a href="#" class="nav-button" id="headerChatLink">Chatea con nuestra IA</a>
+      <a href="#contacto" class="nav-button">Contacto</a>
+    </nav>
+  </header>
+
+  <main class="contenido">
+    <section class="hero">
+      <div class="animated-title">
+        <h1>
+          <span>S</span>
+          <span>m</span>
+          <span>a</span>
+          <span>r</span>
+          <span>t</span>
+          <span>H</span>
+          <span>o</span>
+          <span>t</span>
+          <span>e</span>
+          <span>l</span>
+          <span>s</span>
+        </h1>
+        <div class="title-glow"></div>
+      </div>
+      <div class="slogan-container animate-on-scroll">
+        <p class="slogan">Automatiza, optimiza, crece.</p>
+        <p class="slogan-highlight">
+          <span class="letter">A</span>
+          <span class="letter">u</span>
+          <span class="letter">t</span>
+          <span class="letter">o</span>
+          <span class="letter">m</span>
+          <span class="letter">a</span>
+          <span class="letter">t</span>
+          <span class="letter">i</span>
+          <span class="letter">z</span>
+          <span class="letter">a</span>
+          <span class="letter">c</span>
+          <span class="letter">i</span>
+          <span class="letter">ó</span>
+          <span class="letter">n</span>
+          <span class="letter">&nbsp;</span>
+          <span class="letter">i</span>
+          <span class="letter">n</span>
+          <span class="letter">t</span>
+          <span class="letter">e</span>
+          <span class="letter">l</span>
+          <span class="letter">i</span>
+          <span class="letter">g</span>
+          <span class="letter">e</span>
+          <span class="letter">n</span>
+          <span class="letter">t</span>
+          <span class="letter">e</span>
+          <span class="letter">&nbsp;</span>
+          <span class="letter">h</span>
+          <span class="letter">o</span>
+          <span class="letter">t</span>
+          <span class="letter">e</span>
+          <span class="letter">l</span>
+          <span class="letter">e</span>
+          <span class="letter">r</span>
+          <span class="letter">a</span>
+        </p>
+      </div>
+    </section>
+
+    <section id="about" class="seccion about">
+      <div class="section-header">
+        <h2>
+          <span class="letter">N</span>
+          <span class="letter">o</span>
+          <span class="letter">s</span>
+          <span class="letter">o</span>
+          <span class="letter">t</span>
+          <span class="letter">r</span>
+          <span class="letter">o</span>
+          <span class="letter">s</span>
+        </h2>
+      </div>
+      <div class="about-content">
+        <div class="about-main">
+          <p class="highlight-text">Optimizamos hoteles con IA: procesos automatizados, upselling inteligente y clientes más satisfechos.</p>
+          <p class="about-description">
+            <span class="results-intro">Resultados demostrados en hoteles líderes:</span>
+          <div class="about-features">
+            <div class="feature-item">
+              <div class="feature-icon">📈</div>
+              <h4>+9% RevPAR</h4>
+              <p>Precios dinámicos con IA</p>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon">💰</div>
+              <h4>+50% Ingresos Ancilares</h4>
+              <p>Recomendaciones inteligentes</p>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon">🎯</div>
+              <h4>+30% Conversión</h4>
+              <p>Reservas directas personalizadas</p>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon">⚡</div>
+              <h4>-65% Soporte Manual</h4>
+              <p>Ahorro en personal</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="services" class="seccion servicios">
+      <div class="section-header">
+        <h2>
+          <span class="letter">S</span>
+          <span class="letter">e</span>
+          <span class="letter">r</span>
+          <span class="letter">v</span>
+          <span class="letter">i</span>
+          <span class="letter">c</span>
+          <span class="letter">i</span>
+          <span class="letter">o</span>
+          <span class="letter">s</span>
+        </h2>
+      </div>
+      <div class="projects-container">
+        <div class="proyectos-carousel">
+          <div class="proyectos-track">
+            <div class="proyecto-card">
+              <div class="proyecto-media">
+                <img src="assets/ai-icon.png" alt="Asistente Virtual" loading="lazy">
+              </div>
+              <div class="proyecto-info">
+                <h3>Asistente Virtual</h3>
+                <p>Sistema inteligente de gestión de huéspedes, reservas y posibles clientes automático.</p>
+              </div>
+            </div>
+            <div class="proyecto-card">
+              <div class="proyecto-media">
+                <img src="assets/ai-icon.png" alt="Upselling Inteligente" loading="lazy">
+              </div>
+              <div class="proyecto-info">
+                <h3>Upselling Inteligente</h3>
+                <p>Recomendaciones personalizadas que aumentan el ticket medio de forma natural y la conversión.</p>
+              </div>
+            </div>
+            <div class="proyecto-card">
+              <div class="proyecto-media">
+                <img src="assets/ai-icon.png" alt="Gestión de Habitaciones" loading="lazy">
+              </div>
+              <div class="proyecto-info">
+                <h3>Reportes Inteligentes</h3>
+                <p>Informes periódicos que detectan cuellos de botella y oportunidades de mejora para optimizar procesos y maximizar beneficios.</p>
+              </div>
+            </div>
+            <div class="proyecto-card">
+              <div class="proyecto-media">
+                <img src="assets/ai-icon.png" alt="Automatización de Correos" loading="lazy">
+              </div>
+              <div class="proyecto-info">
+                <h3>Automatización de Correos</h3>
+                <p>Sistema inteligente personalizado que clasifica y genera respuestas por email según las políticas del hotel.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div id="projectGallery" class="project-gallery">
+          <button class="close-gallery">&times;</button>
+          <div class="gallery-content">
+            <div class="gallery-image-container">
+              <img src="assets/ai-icon.png" alt="Imagen del servicio" id="projectImage">
+            </div>
+            <div class="gallery-info">
+              <h3 id="projectTitle"></h3>
+              <p id="projectDescription">Sistema inteligente de gestión de reservas que optimiza la ocupación y reduce errores.</p>
+            </div>
+          </div>
+          <div class="gallery-navigation">
+            <button class="gallery-nav prev-btn" disabled>&lt;</button>
+            <button class="gallery-nav next-btn">&gt;</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contacto" class="seccion contacto">
+      <div class="section-header">
+        <h2>
+          <span class="letter">C</span>
+          <span class="letter">o</span>
+          <span class="letter">n</span>
+          <span class="letter">t</span>
+          <span class="letter">a</span>
+          <span class="letter">c</span>
+          <span class="letter">t</span>
+          <span class="letter">o</span>
+        </h2>
+        <p>Optimiza tu hotel. Aumenta ingresos. ¡Empecemos!</p>
+      </div>
+      <form id="contactForm" class="contact-form">
+        <div class="form-group">
+          <input type="text" id="nombre" name="nombre" required placeholder="Tu nombre">
+        </div>
+        <div class="form-group">
+          <input type="email" id="email" name="email" required placeholder="Tu email">
+        </div>
+        <div class="form-group">
+          <textarea id="mensaje" name="mensaje" required placeholder="Tu mensaje"></textarea>
+        </div>
+        <div class="form-group privacy-check">
+          <input type="checkbox" id="privacyCheck" required>
+          <label for="privacyCheck">Acepto la <a href="#" id="privacyLink">Política de Privacidad</a></label>
+        </div>
+        <button type="submit" id="submitBtn">Enviar Mensaje</button>
+        <div id="formStatus" class="form-status"></div>
+      </form>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>SmartHotels</h3>
+        <p>Automatización inteligente para hoteles</p>
+        <div class="social-links">
+          <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-section">
+        <h3>Contacto</h3>
+        <p>Email: contacto@smarthotels.com</p>
+      </div>
+
+      <div class="footer-section">
+        <h3>Enlaces Rápidos</h3>
+        <a href="#about">Sobre Nosotros</a>
+        <a href="#services">Servicios</a>
+        <a href="#" id="footerChatLink">Asistente IA</a>
+        <a href="#contacto">Contacto</a>
+      </div>
+
+      <div class="footer-section">
+        <h3>Legal</h3>
+        <a href="#" id="footerPrivacyLink">Política de Privacidad</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2024 SmartHotels. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- Privacy Policy Modal -->
+  <div id="privacyModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Política de Privacidad</h2>
+        <button class="close-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <h3>Recopilación de Datos</h3>
+        <p>Recopilamos información que nos proporciona directamente, incluyendo:</p>
+        <ul>
+          <li>Nombre e información de contacto</li>
+          <li>Dirección de correo electrónico</li>
+          <li>Cualquier otra información que elija proporcionar</li>
+        </ul>
+
+        <h3>Propósito de la Recopilación de Datos</h3>
+        <p>Utilizamos los datos recopilados para:</p>
+        <ul>
+          <li>Responder a sus consultas</li>
+          <li>Proporcionar nuestros servicios</li>
+          <li>Mejorar nuestros servicios</li>
+          <li>Enviarle actualizaciones y comunicaciones de marketing (con su consentimiento)</li>
+        </ul>
+
+        <h3>Base Legal</h3>
+        <p>Procesamos sus datos basándonos en:</p>
+        <ul>
+          <li>Su consentimiento</li>
+          <li>Nuestros intereses comerciales legítimos</li>
+          <li>Obligaciones legales</li>
+        </ul>
+
+        <h3>Conservación de Datos</h3>
+        <p>Conservamos sus datos durante el tiempo necesario para cumplir los fines para los que fueron recopilados, incluyendo requisitos legales, contables o de informes.</p>
+
+        <h3>Sus Derechos</h3>
+        <p>Tiene derecho a:</p>
+        <ul>
+          <li>Acceder a sus datos personales</li>
+          <li>Corregir datos inexactos</li>
+          <li>Solicitar la eliminación de sus datos</li>
+          <li>Oponerse al procesamiento de datos</li>
+          <li>Portabilidad de datos</li>
+        </ul>
+
+        <h3>Responsable del Tratamiento</h3>
+        <p>SmartHotels<br>
+        Email: contacto@smarthotels.es
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="script.js"></script>
+</body>
+</html>
+
