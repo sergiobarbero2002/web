@@ -99,15 +99,20 @@ function addMessage(message, isUser = false) {
 
 async function sendToChatGPT(message) {
   try {
-    // Agregar el mensaje actual al historial antes de enviar
-    const currentHistory = [...chatHistory, { role: 'user', content: message }];
+    console.log("📤 Enviando a OpenAI - Mensaje actual:", message);
+    console.log("📤 Enviando a OpenAI - Historial actual:", chatHistory.length, "mensajes");
+    if (chatHistory.length > 0) {
+      chatHistory.forEach((msg, index) => {
+        console.log(`  ${index + 1}. [${msg.role}]: ${msg.content.substring(0, 50)}${msg.content.length > 50 ? '...' : ''}`);
+      });
+    }
     
     const res = await fetch('/.netlify/functions/chatGPT', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ 
         message,
-        chatHistory: currentHistory 
+        chatHistory: chatHistory 
       })
     });
     const data = await res.json();
@@ -130,12 +135,10 @@ async function handleChatSubmit() {
   addMessage(message, true);
   chatInput.value = '';
   
-  // Agregar el mensaje del usuario al historial
-  chatHistory.push({ role: 'user', content: message });
-  
   const reply = await sendToChatGPT(message);
   
-  // Agregar la respuesta del asistente al historial
+  // Agregar tanto el mensaje del usuario como la respuesta al historial
+  chatHistory.push({ role: 'user', content: message });
   chatHistory.push({ role: 'assistant', content: reply });
   addMessage(reply);
   
@@ -154,7 +157,7 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
   const submitBtn = document.getElementById('submitBtn');
   const status = document.getElementById('formStatus');
   submitBtn.disabled = true;
-  submitBtn.textContent = 'Sending...';
+  submitBtn.textContent = 'Enviando...';
 
   const payload = {
     nombre: document.getElementById('nombre').value,
@@ -223,5 +226,132 @@ chatModal.addEventListener('click', (e) => {
     chatModal.classList.remove('active');
     chatMessages.innerHTML = '';
     chatHistory = [];
+  }
+});
+
+// Project Gallery functionality
+const projectGallery = document.getElementById('projectGallery');
+const closeGallery = document.querySelector('.close-gallery');
+const projectImage = document.getElementById('projectImage');
+const projectTitle = document.getElementById('projectTitle');
+const projectDescription = document.getElementById('projectDescription');
+const prevBtn = document.querySelector('.prev-btn');
+const nextBtn = document.querySelector('.next-btn');
+
+// Datos de los servicios
+const serviciosData = {
+  'Asistente Virtual': {
+    images: [
+      { src: 'assets/ai-icon.png', text: 'Sistema de precios dinámicos que aumenta el RevPAR en un 9% mediante análisis de demanda en tiempo real.' },
+      { src: 'assets/ai-icon.png', text: 'Optimización automática de tarifas basada en ocupación, temporada y competencia.' },
+      { src: 'assets/ai-icon.png', text: 'Predicción de demanda y ajuste proactivo de precios para maximizar ingresos.' }
+    ]
+  },
+  'Upselling Inteligente': {
+    images: [
+      { src: 'assets/ai-icon.png', text: 'Recomendaciones personalizadas que aumentan las ventas adicionales en un 50%.' },
+      { src: 'assets/ai-icon.png', text: 'Análisis de preferencias de clientes para ofertas personalizadas de servicios premium.' },
+      { src: 'assets/ai-icon.png', text: 'Sistema de fidelización automático con recompensas personalizadas.' }
+    ]
+  },
+  'Reportes Inteligentes': {
+    images: [
+      { src: 'assets/ai-icon.png', text: 'Personalización de la experiencia que aumenta la conversión en el canal directo en un 30%.' },
+      { src: 'assets/ai-icon.png', text: 'Optimización de la página web y proceso de reserva para maximizar conversiones.' },
+      { src: 'assets/ai-icon.png', text: 'Sistema de retargeting inteligente para recuperar abandonos.' }
+    ]
+  },
+  'Automatización de Correos': {
+    images: [
+      { src: 'assets/ai-icon.png', text: 'Reducción del 65% en tareas manuales mediante automatización inteligente.' },
+      { src: 'assets/ai-icon.png', text: 'Gestión automática de inventario, limpieza y mantenimiento.' },
+      { src: 'assets/ai-icon.png', text: 'Optimización de recursos y personal basada en IA.' }
+    ]
+  }
+};
+
+let currentService = null;
+let currentImageIndex = 0;
+
+// Función para abrir la galería
+function openGallery(serviceTitle) {
+  currentService = serviceTitle;
+  currentImageIndex = 0;
+  updateGallery();
+  projectGallery.classList.add('active');
+  playClickSound();
+}
+
+// Función para actualizar la galería
+function updateGallery() {
+  const service = serviciosData[currentService];
+  const imageData = service.images[currentImageIndex];
+  
+  projectTitle.textContent = currentService;
+  projectImage.src = imageData.src;
+  projectDescription.textContent = imageData.text;
+  
+  // Actualizar estado de los botones
+  prevBtn.disabled = currentImageIndex === 0;
+  nextBtn.disabled = currentImageIndex === service.images.length - 1;
+}
+
+// Función para mostrar imagen anterior
+function showPrevImage() {
+  if (currentImageIndex > 0) {
+    currentImageIndex--;
+    updateGallery();
+    playClickSound();
+  }
+}
+
+// Función para mostrar siguiente imagen
+function showNextImage() {
+  const service = serviciosData[currentService];
+  if (currentImageIndex < service.images.length - 1) {
+    currentImageIndex++;
+    updateGallery();
+    playClickSound();
+  }
+}
+
+// Función para cerrar la galería
+function closeProjectGallery() {
+  projectGallery.classList.remove('active');
+  playClickSound();
+}
+
+// Event listeners para los botones de navegación
+prevBtn.addEventListener('click', showPrevImage);
+nextBtn.addEventListener('click', showNextImage);
+
+// Event listeners para las tarjetas de proyecto
+document.querySelectorAll('.proyecto-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const title = card.querySelector('h3').textContent;
+    openGallery(title);
+  });
+});
+
+// Event listener para cerrar la galería
+closeGallery.addEventListener('click', closeProjectGallery);
+
+// Cerrar galería al hacer clic fuera
+projectGallery.addEventListener('click', (e) => {
+  if (e.target === projectGallery) {
+    closeProjectGallery();
+  }
+});
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+  if (projectGallery.classList.contains('active')) {
+    if (e.key === 'ArrowLeft') {
+      showPrevImage();
+    } else if (e.key === 'ArrowRight') {
+      showNextImage();
+    } else if (e.key === 'Escape') {
+      closeProjectGallery();
+    }
   }
 });

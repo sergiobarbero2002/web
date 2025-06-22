@@ -34,7 +34,7 @@ exports.handler = async function (event) {
       body: JSON.stringify({
         from: "SmartHotels <onboarding@resend.dev>",
         to: [process.env.TO_EMAIL],
-        subject: `Nuevo mensaje de contacto de ${nombre}`,
+        subject: `Nuevo mensaje: ${nombre}`,
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
             <h2 style="color: #C8A04F;">Nuevo mensaje de contacto</h2>

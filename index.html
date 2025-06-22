@@ -236,23 +236,33 @@
         </h2>
         <p>Optimiza tu hotel. Aumenta ingresos. ¡Empecemos!</p>
       </div>
-      <form id="contactForm" class="contact-form">
-        <div class="form-group">
-          <input type="text" id="nombre" name="nombre" required placeholder="Tu nombre">
+      <div class="contact-container">
+        <div class="contact-form-section">
+          <h3>Envíanos un mensaje</h3>
+          <form id="contactForm" class="contact-form">
+            <div class="form-group">
+              <input type="text" id="nombre" name="nombre" required placeholder="Tu nombre">
+            </div>
+            <div class="form-group">
+              <input type="email" id="email" name="email" required placeholder="Tu email">
+            </div>
+            <div class="form-group">
+              <textarea id="mensaje" name="mensaje" required placeholder="Tu mensaje"></textarea>
+            </div>
+            <div class="form-group privacy-check">
+              <input type="checkbox" id="privacyCheck" required>
+              <label for="privacyCheck">Acepto la <a href="#" id="privacyLink">Política de Privacidad</a></label>
+            </div>
+            <button type="submit" id="submitBtn">Enviar Mensaje</button>
+            <div id="formStatus" class="form-status"></div>
+          </form>
         </div>
-        <div class="form-group">
-          <input type="email" id="email" name="email" required placeholder="Tu email">
+        <div class="calendly-section">
+          <h3>Agenda una llamada gratuita</h3>
+          <div class="calendly-inline-widget" data-url="https://calendly.com/sergio-bg-2002/consulta-gratuita" style="min-width:450px;height:600px;"></div>
+          <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
         </div>
-        <div class="form-group">
-          <textarea id="mensaje" name="mensaje" required placeholder="Tu mensaje"></textarea>
-        </div>
-        <div class="form-group privacy-check">
-          <input type="checkbox" id="privacyCheck" required>
-          <label for="privacyCheck">Acepto la <a href="#" id="privacyLink">Política de Privacidad</a></label>
-        </div>
-        <button type="submit" id="submitBtn">Enviar Mensaje</button>
-        <div id="formStatus" class="form-status"></div>
-      </form>
+      </div>
     </section>
   </main>
 
@@ -262,13 +272,13 @@
         <h3>SmartHotels</h3>
         <p>Automatización inteligente para hoteles</p>
         <div class="social-links">
-          <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+          <a href="https://www.linkedin.com/company/smarthotels/" class="social-link" target="_blank"><i class="fab fa-linkedin"></i></a>
         </div>
       </div>
 
       <div class="footer-section">
         <h3>Contacto</h3>
-        <p>Email: contacto@smarthotels.com</p>
+        <p>Email: contact@smarthotels.es</p>
       </div>
 
       <div class="footer-section">
@@ -338,7 +348,7 @@
 
         <h3>Responsable del Tratamiento</h3>
         <p>SmartHotels<br>
-        Email: contacto@smarthotels.es
+        Email: contact@smarthotels.es
         </p>
       </div>
     </div>

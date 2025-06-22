@@ -300,9 +300,85 @@ textarea {
 }
 
 /* Formulario de contacto */
-.contact-form {
-  max-width: 600px;
+.contact-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  max-width: 1200px;
   margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.contact-form-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-form-section h3 {
+  color: var(--color-text-primary);
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  position: relative;
+}
+
+.contact-form-section h3::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: var(--color-gold-primary);
+  border-radius: 2px;
+}
+
+.calendly-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.calendly-section h3 {
+  color: var(--color-text-primary);
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.calendly-section h3::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: var(--color-gold-primary);
+  border-radius: 2px;
+}
+
+.calendly-section p {
+  color: var(--color-text-secondary);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  max-width: 400px;
+}
+
+.calendly-inline-widget {
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(200, 160, 79, 0.15);
+  border: 2px solid var(--color-gold-primary);
+  background: white;
+}
+
+.contact-form {
+  max-width: 100%;
+  margin: 0;
   padding: 2.5rem;
   background: linear-gradient(135deg, 
     rgba(250, 247, 240, 0.95), 
@@ -1168,43 +1244,63 @@ textarea {
 
 @media (max-width: 768px) {
   .about-description {
-    max-width: 90%;
-    font-size: 1rem;
-    padding: 0 0.5rem;
+    padding: 2rem 1rem;
   }
-  
+
   .about-features {
     grid-template-columns: 1fr;
-    padding: 0 1rem;
+    gap: 2rem;
   }
-  
+
   .feature-item {
-    padding: 20px;
+    padding: 2rem 1.5rem;
   }
-  
+
   .feature-item h4 {
+    font-size: 1.3rem;
+  }
+
+  .feature-item p {
     font-size: 1rem;
   }
-  
-  .feature-item p {
-    font-size: 0.8rem;
-  }
-  
+
   .about-stats {
-    gap: 1.5rem;
+    grid-template-columns: 1fr;
   }
-  
+
   .stat-item {
-    min-width: 120px;
-    padding: 1.2rem;
+    padding: 2rem 1.5rem;
   }
-  
+
   .stat-item h3 {
-    font-size: 2rem;
+    font-size: 2.5rem;
   }
-  
+
   .highlight-text {
-    font-size: 1.2rem;
+    font-size: 1.8rem;
+  }
+
+  /* Contact layout responsive */
+  .contact-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 0 1rem;
+  }
+
+  .contact-form-section h3,
+  .calendly-section h3 {
+    font-size: 1.5rem;
+  }
+
+  .calendly-section p {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .calendly-inline-widget {
+    width: 100%;
+    min-width: 280px;
+    height: 600px;
   }
 }
 
@@ -2262,5 +2358,512 @@ textarea {
   
   .gallery-info p {
     font-size: 1rem;
+  }
+}
+
+/* ===== MOBILE RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+  /* Hero section */
+  .hero {
+    height: 100vh;
+    padding: 1rem;
+    justify-content: center;
+  }
+
+  .hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    letter-spacing: 1px;
+  }
+
+  .slogan {
+    font-size: 1.2rem;
+    letter-spacing: 0.5px;
+  }
+
+  .slogan-highlight {
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+    margin-top: 0.5rem;
+  }
+
+  /* Navigation */
+  .main-header {
+    padding: 0.5rem 1rem;
+  }
+
+  .nav-container {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.5rem;
+  }
+
+  .nav-button {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+  }
+
+  /* Sections */
+  .seccion {
+    padding: 2rem 1rem;
+    margin: 10px 0;
+  }
+
+  .seccion::before {
+    margin: 5px;
+    border-radius: 10px;
+  }
+
+  /* Section headers */
+  .section-header h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .section-header p {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+
+  /* About section */
+  .about-content {
+    padding: 2rem 1rem;
+  }
+
+  .about-description {
+    padding: 1.5rem 1rem;
+    font-size: 1rem;
+  }
+
+  .highlight-text {
+    font-size: 1.4rem;
+    padding: 0 0.5rem;
+  }
+
+  .results-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 0 1rem;
+  }
+
+  .result-item {
+    padding: 1.5rem;
+    min-height: auto;
+  }
+
+  .result-item h3 {
+    font-size: 2rem;
+  }
+
+  .result-item p {
+    font-size: 0.9rem;
+  }
+
+  .about-features {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 0 1rem;
+  }
+
+  .feature-item {
+    padding: 1.5rem;
+    min-height: auto;
+  }
+
+  .feature-item h4 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .feature-item p {
+    font-size: 0.9rem;
+  }
+
+  .about-stats {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 0 1rem;
+  }
+
+  .stat-item {
+    padding: 1.5rem;
+  }
+
+  .stat-item h3 {
+    font-size: 2.5rem;
+  }
+
+  .stat-item p {
+    font-size: 0.9rem;
+  }
+
+  /* Projects section */
+  .proyectos-track {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 0 1rem;
+  }
+
+  .proyecto-card {
+    padding: 1.5rem;
+    min-height: auto;
+  }
+
+  .proyecto-info h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .proyecto-info p {
+    font-size: 0.9rem;
+  }
+
+  /* Contact section */
+  .contact-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 0 1rem;
+  }
+
+  .contact-form-section h3,
+  .calendly-section h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .calendly-section p {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .calendly-inline-widget {
+    width: 100%;
+    min-width: 280px;
+    height: 600px;
+  }
+
+  .contact-form {
+    padding: 1.5rem;
+  }
+
+  .form-group {
+    margin-bottom: 1.2rem;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    padding: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .form-group textarea {
+    min-height: 120px;
+  }
+
+  .privacy-check {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .privacy-check label {
+    font-size: 0.9rem;
+  }
+
+  #submitBtn {
+    padding: 1rem;
+    font-size: 1rem;
+  }
+
+  /* Chat modal */
+  .chat-modal-content {
+    width: 95%;
+    height: 90vh;
+    margin: 5vh auto;
+  }
+
+  .chat-header {
+    padding: 1rem;
+  }
+
+  .chat-header h3 {
+    font-size: 1.2rem;
+  }
+
+  .chat-messages {
+    height: calc(90vh - 140px);
+    padding: 1rem;
+  }
+
+  .message {
+    margin-bottom: 1rem;
+    padding: 0.8rem;
+  }
+
+  .message-content {
+    font-size: 0.9rem;
+  }
+
+  .chat-input-container {
+    padding: 1rem;
+  }
+
+  .chat-input-container input {
+    padding: 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  .chat-input-container button {
+    padding: 0.8rem 1.2rem;
+    font-size: 0.9rem;
+  }
+
+  /* Project gallery */
+  .project-gallery {
+    width: 95%;
+    height: 90vh;
+    margin: 5vh auto;
+  }
+
+  .gallery-content {
+    padding: 1rem;
+  }
+
+  .gallery-image-container {
+    margin-bottom: 1rem;
+  }
+
+  .gallery-image-container img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .gallery-info h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .gallery-info p {
+    font-size: 0.9rem;
+  }
+
+  .gallery-navigation {
+    padding: 1rem;
+  }
+
+  .gallery-nav {
+    padding: 0.8rem 1.2rem;
+    font-size: 1rem;
+  }
+
+  .close-gallery {
+    top: 1rem;
+    right: 1rem;
+    width: 35px;
+    height: 35px;
+    font-size: 1.5rem;
+  }
+
+  /* Footer */
+  .footer {
+    padding: 2rem 1rem;
+  }
+
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .footer-section {
+    text-align: center;
+    padding: 1rem;
+  }
+
+  .footer-section h3 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+
+  .footer-section p,
+  .footer-section a {
+    font-size: 0.9rem;
+  }
+
+  .social-links {
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .footer-bottom {
+    padding: 1rem;
+  }
+
+  .footer-bottom p {
+    font-size: 0.9rem;
+  }
+
+  /* Modal */
+  .modal-content {
+    width: 95%;
+    margin: 20px auto;
+  }
+
+  .modal-header {
+    padding: 1rem;
+  }
+
+  .modal-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .modal-body {
+    padding: 1.5rem;
+  }
+
+  .modal-body h3 {
+    font-size: 1.2rem;
+    margin: 1.5rem 0 1rem;
+  }
+
+  .modal-body p,
+  .modal-body li {
+    font-size: 0.9rem;
+  }
+
+  /* Chat bubble */
+  .chat-bubble {
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+  }
+
+  .chat-button {
+    width: 60px;
+    height: 60px;
+  }
+
+  .chat-icon {
+    width: 30px;
+    height: 30px;
+  }
+
+  /* Particles adjustment */
+  #particles-js {
+    opacity: 0.2;
+  }
+
+  /* General text adjustments */
+  body {
+    font-size: 0.9rem;
+  }
+
+  /* Button adjustments */
+  button {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  /* Smooth scrolling for mobile */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Touch-friendly improvements */
+  .nav-button,
+  .proyecto-card,
+  button,
+  input,
+  textarea {
+    min-height: 44px; /* Apple's recommended minimum touch target size */
+  }
+
+  .chat-button {
+    min-height: 60px;
+    min-width: 60px;
+  }
+
+  /* Prevent zoom on input focus for iOS */
+  input[type="text"],
+  input[type="email"],
+  textarea {
+    font-size: 16px;
+  }
+
+  /* Improve scrolling performance */
+  .chat-messages,
+  .modal-body {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Chat mobile optimizations */
+  .chat-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3000;
+  }
+
+  .chat-modal-content {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .chat-messages {
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  .chat-input-container {
+    position: sticky;
+    bottom: 0;
+    background: white;
+    border-top: 1px solid var(--color-border-soft);
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .slogan {
+    font-size: 1rem;
+  }
+
+  .slogan-highlight {
+    font-size: 1.2rem;
+  }
+
+  .section-header h2 {
+    font-size: 1.8rem;
+  }
+
+  .highlight-text {
+    font-size: 1.2rem;
+  }
+
+  .contact-form {
+    padding: 1rem;
+  }
+
+  .calendly-inline-widget {
+    height: 500px;
+  }
+
+  .chat-modal-content {
+    width: 98%;
+    height: 95vh;
+    margin: 2.5vh auto;
+  }
+
+  .project-gallery {
+    width: 98%;
+    height: 95vh;
+    margin: 2.5vh auto;
   }
 } 

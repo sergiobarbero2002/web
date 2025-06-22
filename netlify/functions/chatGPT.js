@@ -23,13 +23,19 @@ exports.handler = async function (event) {
     
     // Agregar el historial de conversación si existe
     if (chatHistory && Array.isArray(chatHistory)) {
-      messages.push(...chatHistory);
+      console.log("📝 Agregando historial de conversación:");
+      chatHistory.forEach((msg, index) => {
+        console.log(`  ${index + 1}. [${msg.role}]: ${msg.content.substring(0, 100)}${msg.content.length > 100 ? '...' : ''}`);
+        messages.push(msg);
+      });
     }
     
     // Agregar el mensaje actual del usuario
     messages.push({ role: "user", content: message });
+    console.log(`📝 Agregando mensaje actual: [user]: ${message.substring(0, 100)}${message.length > 100 ? '...' : ''}`);
 
-    console.log("Total de mensajes enviados a OpenAI:", messages.length);
+    console.log("📊 Total de mensajes enviados a OpenAI:", messages.length);
+    console.log("🔍 Mensaje del sistema:", messages[0].content.substring(0, 100) + (messages[0].content.length > 100 ? '...' : ''));
 
     // Llamada a OpenAI usando fetch global
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -67,7 +73,8 @@ exports.handler = async function (event) {
       };
     }
 
-    console.log("✅ Respuesta generada:", reply);
+    console.log("✅ Respuesta completa de OpenAI:", reply);
+    console.log("📊 Tokens usados:", data.usage ? `Prompt: ${data.usage.prompt_tokens}, Completion: ${data.usage.completion_tokens}, Total: ${data.usage.total_tokens}` : "No disponible");
     return {
       statusCode: 200,
       body: JSON.stringify({ reply })
