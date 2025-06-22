@@ -12,8 +12,24 @@ exports.handler = async function (event) {
   }
 
   try {
-    const { message } = JSON.parse(event.body);
+    const { message, chatHistory } = JSON.parse(event.body);
     console.log("Mensaje recibido del frontend:", message);
+    console.log("Historial de conversación recibido:", chatHistory ? `${chatHistory.length} mensajes` : "Sin historial");
+
+    // Construir el array de mensajes para OpenAI
+    const messages = [
+      { role: "system", content: process.env.system_message || "Sistema no configurado correctamente." }
+    ];
+    
+    // Agregar el historial de conversación si existe
+    if (chatHistory && Array.isArray(chatHistory)) {
+      messages.push(...chatHistory);
+    }
+    
+    // Agregar el mensaje actual del usuario
+    messages.push({ role: "user", content: message });
+
+    console.log("Total de mensajes enviados a OpenAI:", messages.length);
 
     // Llamada a OpenAI usando fetch global
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -26,10 +42,7 @@ exports.handler = async function (event) {
         model: "gpt-4o-mini",
         temperature: 0.7,
         max_tokens: 500,
-        messages: [
-          { role: "system", content: process.env.system_message || "Sistema no configurado correctamente." },
-          { role: "user",   content: message }
-        ]
+        messages: messages
       })
     });
 

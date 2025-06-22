@@ -11,52 +11,58 @@ exports.handler = async function (event) {
   }
 
   // Log de variables de entorno
-  console.log("SERVICE_ID:",   process.env.EMAILJS_SERVICE_ID);
-  console.log("TEMPLATE_ID:",  process.env.EMAILJS_TEMPLATE_ID);
-  console.log("PUBLIC_KEY:",   process.env.EMAILJS_PUBLIC_KEY);
-  console.log("TO:",           process.env.EMAIL_TO);
+  console.log("RESEND_API_KEY:", process.env.RESEND_API_KEY ? "[OK]" : "[MISSING]");
+  console.log("TO_EMAIL:", process.env.TO_EMAIL);
 
   // Validación de env vars
-  if (
-    !process.env.EMAILJS_SERVICE_ID ||
-    !process.env.EMAILJS_TEMPLATE_ID ||
-    !process.env.EMAILJS_PUBLIC_KEY ||
-    !process.env.EMAIL_TO
-  ) {
-    console.error("❌ Alguna variable de EmailJS no está definida");
+  if (!process.env.RESEND_API_KEY || !process.env.TO_EMAIL) {
+    console.error("❌ Variables de entorno Resend incompletas");
     return {
       statusCode: 500,
-      body: "Variables de entorno EmailJS incompletas"
+      body: "Variables de entorno Resend incompletas"
     };
   }
 
   try {
-    // Llamada a EmailJS con fetch global
-    const response = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
+    // Llamada a Resend API
+    const response = await fetch("https://api.resend.com/emails", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Authorization": `Bearer ${process.env.RESEND_API_KEY}`,
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
-        service_id:      process.env.EMAILJS_SERVICE_ID,
-        template_id:     process.env.EMAILJS_TEMPLATE_ID,
-        user_id:         process.env.EMAILJS_PUBLIC_KEY,
-        template_params: {
-          from_name:  nombre,
-          from_email: email,
-          message:    mensaje,
-          to_email:   process.env.EMAIL_TO
-        }
+        from: "SmartHotels <onboarding@resend.dev>",
+        to: [process.env.TO_EMAIL],
+        subject: `Nuevo mensaje de contacto de ${nombre}`,
+        html: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+            <h2 style="color: #C8A04F;">Nuevo mensaje de contacto</h2>
+            <div style="background-color: #f9f9f9; padding: 20px; border-radius: 8px; margin: 20px 0;">
+              <p><strong>Nombre:</strong> ${nombre}</p>
+              <p><strong>Email:</strong> ${email}</p>
+              <p><strong>Mensaje:</strong></p>
+              <div style="background-color: white; padding: 15px; border-left: 4px solid #C8A04F; margin-top: 10px;">
+                ${mensaje.replace(/\n/g, '<br>')}
+              </div>
+            </div>
+            <p style="color: #666; font-size: 12px;">
+              Este mensaje fue enviado desde el formulario de contacto de SmartHotels.
+            </p>
+          </div>
+        `
       })
     });
 
-    console.log("EmailJS responded with status:", response.status);
-    const text = await response.text();
-    console.log("EmailJS response body:", text);
+    console.log("Resend responded with status:", response.status);
+    const data = await response.json();
+    console.log("Resend response:", data);
 
     if (!response.ok) {
-      console.error("❌ Error al enviar email:", text);
+      console.error("❌ Error al enviar email:", data);
       return {
         statusCode: response.status,
-        body: `Error al enviar email: ${text}`
+        body: `Error al enviar email: ${data.message || 'Error desconocido'}`
       };
     }
 

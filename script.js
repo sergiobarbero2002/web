@@ -99,10 +99,16 @@ function addMessage(message, isUser = false) {
 
 async function sendToChatGPT(message) {
   try {
+    // Agregar el mensaje actual al historial antes de enviar
+    const currentHistory = [...chatHistory, { role: 'user', content: message }];
+    
     const res = await fetch('/.netlify/functions/chatGPT', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message })
+      body: JSON.stringify({ 
+        message,
+        chatHistory: currentHistory 
+      })
     });
     const data = await res.json();
     if (data && data.reply) {
@@ -123,10 +129,16 @@ async function handleChatSubmit() {
   sendButton.textContent = 'Enviando...';
   addMessage(message, true);
   chatInput.value = '';
-  const reply = await sendToChatGPT(message);
+  
+  // Agregar el mensaje del usuario al historial
   chatHistory.push({ role: 'user', content: message });
+  
+  const reply = await sendToChatGPT(message);
+  
+  // Agregar la respuesta del asistente al historial
   chatHistory.push({ role: 'assistant', content: reply });
   addMessage(reply);
+  
   chatInput.disabled = false;
   sendButton.disabled = false;
   sendButton.textContent = 'Send';
