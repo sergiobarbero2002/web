@@ -200,10 +200,12 @@ button:hover {
 .seccion {
   position: relative;
   z-index: 2;
-  padding: calc(2 * var(--base-unit)) var(--container-padding);
+  padding: calc(0.8 * var(--base-unit)) calc(0.5 * var(--base-unit)); /* Menos padding vertical */
   background-color: transparent;
   text-align: center;
-  margin: calc(2 * var(--base-unit)) 0;
+  margin: calc(0.5 * var(--base-unit)) 0; /* Menos margen entre secciones */
+  width: 100vw;
+  max-width: 100vw;
 }
 
 /* Añadir un pseudo-elemento para el fondo oscuro con borde dorado */
@@ -237,19 +239,21 @@ textarea {
   width: 100%;
   overflow: hidden;
   position: relative;
-  padding: calc(2 * var(--base-unit)) 0;
+  padding: calc(0.5 * var(--base-unit)) 0; /* Menos padding */
 }
 
 .proyectos-track {
   display: flex;
-  gap: var(--gap-large);
+  justify-content: space-between;
+  align-items: stretch;
+  gap: calc(1.5 * var(--base-unit));
   transition: transform 0.5s ease;
   padding: 0 var(--container-padding);
+  width: 100%;
 }
 
 .proyecto-card {
-  min-width: calc(20 * var(--base-unit));
-  min-height: calc(35 * var(--base-unit));
+  height: calc(40 * var(--base-unit));
   background: linear-gradient(135deg, 
     rgba(250, 247, 240, 0.95), 
     rgba(252, 249, 243, 0.98)
@@ -257,15 +261,63 @@ textarea {
   border-radius: var(--border-radius);
   padding: var(--card-padding);
   box-shadow: var(--shadow-md);
-  border: calc(0.1 * var(--base-unit)) solid var(--color-gold-primary);
+  border: calc(0.15 * var(--base-unit)) solid var(--color-gold-primary);
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  flex: 1;
+  max-width: calc(25 * var(--base-unit));
 }
 
+.proyecto-card:hover {
+  transform: translateY(calc(-0.8 * var(--base-unit)));
+  box-shadow: var(--shadow-xl);
+  border-color: var(--color-gold-hover);
+  border-width: calc(0.2 * var(--base-unit));
+}
+
+/* Indicador siempre visible de clickeable */
+.proyecto-card::before {
+  content: 'Ver detalles';
+  position: absolute;
+  bottom: calc(0.6 * var(--base-unit));
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(200, 160, 79, 0.85);
+  color: white;
+  padding: calc(0.3 * var(--base-unit)) calc(1 * var(--base-unit));
+  border-radius: calc(0.6 * var(--base-unit));
+  font-size: calc(0.7 * var(--base-unit));
+  font-weight: 400;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(200, 160, 79, 0.2);
+  opacity: 0.8;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  letter-spacing: calc(0.03 * var(--base-unit));
+  backdrop-filter: blur(4px);
+}
+
+.proyecto-card:hover::before {
+  opacity: 1;
+  transform: translateX(-50%) translateY(calc(-0.1 * var(--base-unit)));
+  box-shadow: 0 4px 12px rgba(200, 160, 79, 0.3);
+  background: rgba(200, 160, 79, 0.95);
+}
+
+@keyframes subtleBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+/* Efecto de brillo deslizante */
 .proyecto-card::after {
   content: '';
   position: absolute;
@@ -282,14 +334,19 @@ textarea {
   transition: 0.5s;
 }
 
+.proyecto-card:hover::after {
+  left: 100%;
+}
+
 .proyecto-info {
   text-align: center;
   position: relative;
   z-index: 2;
-  flex: 1;
+  height: calc(15 * var(--base-unit));
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
+  flex-shrink: 0;
 }
 
 .proyecto-info::before {
@@ -318,12 +375,13 @@ textarea {
   margin-bottom: var(--spacing-md);
   overflow: hidden;
   border-radius: calc(0.5 * var(--base-unit));
-  flex: 1;
+  height: calc(18 * var(--base-unit));
+  flex-shrink: 0;
 }
 
 .proyecto-media img {
   width: 100%;
-  height: calc(12 * var(--base-unit));
+  height: calc(18 * var(--base-unit));
   object-fit: cover;
   transition: transform 0.4s ease;
 }
@@ -340,6 +398,17 @@ textarea {
   color: var(--color-text-secondary);
   line-height: 1.6;
   margin: 0;
+  position: relative;
+}
+
+/* Indicador sutil en el texto siempre visible */
+.proyecto-info p::after {
+  content: '';
+  display: none;
+}
+
+.proyecto-card:hover .proyecto-info p::after {
+  display: none;
 }
 
 /* Formulario de contacto */
@@ -417,6 +486,7 @@ textarea {
   box-shadow: var(--shadow-md);
   border: calc(0.2 * var(--base-unit)) solid var(--color-gold-primary);
   background: white;
+  height: 600px; /* Altura normal para desktop */
 }
 
 .contact-form {
@@ -2311,5 +2381,523 @@ textarea {
   
   .gallery-info p {
     font-size: 1rem;
+  }
+}
+
+/* Media Queries para dispositivos móviles */
+@media (max-width: 768px) {
+  /* Ajustar variables base para móviles */
+  :root {
+    --base-unit: 2vw; /* Unidad base más pequeña para compactar */
+    --section-padding: calc(2 * var(--base-unit));
+    --container-padding: calc(1 * var(--base-unit));
+    --border-radius: calc(0.8 * var(--base-unit));
+    --gap-small: calc(0.5 * var(--base-unit));
+    --gap-medium: calc(1 * var(--base-unit));
+    --gap-large: calc(1.5 * var(--base-unit));
+    --gap-xl: calc(2 * var(--base-unit));
+    
+    /* Tipografía compacta para móviles */
+    --font-size-xs: calc(0.8 * var(--base-unit));
+    --font-size-sm: calc(1 * var(--base-unit));
+    --font-size-base: calc(1.2 * var(--base-unit));
+    --font-size-lg: calc(1.5 * var(--base-unit));
+    --font-size-xl: calc(2 * var(--base-unit));
+    --font-size-2xl: calc(2.5 * var(--base-unit));
+    --font-size-3xl: calc(3 * var(--base-unit));
+    --font-size-4xl: calc(3.5 * var(--base-unit));
+    --font-size-5xl: calc(4 * var(--base-unit));
+    
+    /* Espaciado compacto */
+    --spacing-xs: calc(0.5 * var(--base-unit));
+    --spacing-sm: calc(1 * var(--base-unit));
+    --spacing-md: calc(1.5 * var(--base-unit));
+    --spacing-lg: calc(2 * var(--base-unit));
+    --spacing-xl: calc(3 * var(--base-unit));
+    --spacing-2xl: calc(4 * var(--base-unit));
+    --spacing-3xl: calc(6 * var(--base-unit));
+  }
+
+  /* Asegurar que no haya scroll horizontal */
+  body, html {
+    overflow-x: hidden;
+    width: 100vw;
+    max-width: 100vw;
+  }
+
+  /* Hero section más compacto */
+  .hero {
+    height: 60vh; /* Reducir altura del hero */
+    padding: calc(1 * var(--base-unit));
+    width: 100vw;
+    max-width: 100vw;
+  }
+
+  /* Header responsive compacto */
+  .main-header {
+    padding: calc(0.5 * var(--base-unit)) 0;
+    width: 100vw;
+    max-width: 100vw;
+  }
+
+  .nav-container {
+    padding: calc(0.3 * var(--base-unit)) calc(0.5 * var(--base-unit));
+    gap: calc(0.5 * var(--base-unit));
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    width: 100vw;
+    max-width: 100vw;
+  }
+
+  .nav-button {
+    padding: calc(0.4 * var(--base-unit)) calc(0.6 * var(--base-unit));
+    font-size: calc(0.8 * var(--base-unit));
+    white-space: nowrap;
+    flex: 1;
+    text-align: center;
+    min-width: 0;
+  }
+
+  /* Hero section compacto */
+  .hero h1 {
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--spacing-sm);
+    width: 100%;
+  }
+
+  .slogan {
+    font-size: var(--font-size-base);
+    width: 100%;
+  }
+
+  .slogan-highlight {
+    font-size: var(--font-size-lg);
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+
+  /* Proyectos ajustados al ancho del móvil */
+  .proyectos-track {
+    display: flex;
+    flex-direction: row;
+    gap: calc(0.5 * var(--base-unit));
+    padding: calc(0.5 * var(--base-unit));
+    overflow: visible;
+    justify-content: space-between;
+    width: 100vw;
+    max-width: 100vw;
+  }
+
+  .proyecto-card {
+    width: calc(18 * var(--base-unit));
+    height: calc(30 * var(--base-unit)); /* Más pequeño para pantallas muy pequeñas */
+    max-width: calc(22 * var(--base-unit));
+    flex: 1;
+    padding: calc(0.8 * var(--base-unit));
+    min-width: 0;
+  }
+
+  .proyecto-media {
+    height: calc(10 * var(--base-unit));
+    margin-bottom: calc(0.5 * var(--base-unit));
+    width: 100%;
+  }
+
+  .proyecto-media img {
+    height: calc(10 * var(--base-unit));
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .proyecto-info {
+    height: calc(15 * var(--base-unit));
+    padding: calc(0.3 * var(--base-unit));
+    width: 100%;
+  }
+
+  .proyecto-info h3 {
+    font-size: calc(0.8 * var(--base-unit));
+    margin-bottom: calc(0.3 * var(--base-unit));
+    line-height: 1.2;
+    width: 100%;
+  }
+
+  .proyecto-info p {
+    font-size: calc(0.6 * var(--base-unit));
+    line-height: 1.2;
+    width: 100%;
+  }
+
+  /* Indicador de clickeable más pequeño */
+  .proyecto-card::before {
+    font-size: calc(0.5 * var(--base-unit));
+    padding: calc(0.2 * var(--base-unit)) calc(0.4 * var(--base-unit));
+    bottom: calc(0.2 * var(--base-unit));
+  }
+
+  /* Footer ajustado al ancho del móvil */
+  .footer-content {
+    display: flex;
+    flex-direction: row;
+    gap: calc(0.8 * var(--base-unit));
+    padding: calc(0.5 * var(--base-unit));
+    overflow: visible;
+    justify-content: space-between;
+    width: 100vw;
+    max-width: 100vw;
+  }
+
+  .footer-section {
+    flex: 1;
+    padding: calc(0.5 * var(--base-unit));
+    text-align: center;
+    min-width: 0;
+    max-width: calc(20 * var(--base-unit)); /* Menos ancho */
+  }
+
+  .footer-section h3 {
+    font-size: calc(0.8 * var(--base-unit));
+    margin-bottom: calc(0.4 * var(--base-unit));
+    width: 100%;
+  }
+
+  .footer-section p,
+  .footer-section a {
+    font-size: calc(0.6 * var(--base-unit));
+    margin-bottom: calc(0.3 * var(--base-unit));
+    line-height: 1.2;
+    width: 100%;
+  }
+
+  .social-links {
+    justify-content: center;
+    gap: calc(0.4 * var(--base-unit));
+    width: 100%;
+  }
+
+  /* Botón de LinkedIn más pequeño */
+  .social-link {
+    width: calc(6 * var(--base-unit));
+    height: calc(6 * var(--base-unit));
+  }
+
+  .social-link i {
+    font-size: calc(1 * var(--base-unit));
+  }
+
+  /* Chat compacto y no intrusivo */
+  .floating-chat {
+    bottom: calc(1 * var(--base-unit));
+    right: calc(1 * var(--base-unit));
+    position: fixed;
+    z-index: 1000;
+  }
+
+  .chat-button {
+    width: calc(8 * var(--base-unit));
+    height: calc(8 * var(--base-unit));
+  }
+
+  .chat-icon {
+    width: calc(5 * var(--base-unit));
+    height: calc(5 * var(--base-unit));
+  }
+
+  .chat-bubble {
+    font-size: calc(0.6 * var(--base-unit));
+    padding: calc(0.5 * var(--base-unit)) calc(0.8 * var(--base-unit));
+    max-width: calc(25 * var(--base-unit));
+    white-space: normal;
+    bottom: calc(10 * var(--base-unit));
+    right: 0;
+  }
+
+  /* Chat modal ocupando casi toda la pantalla */
+  .chat-modal {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    top: 0;
+    left: 0;
+    border-radius: 0;
+  }
+
+  .chat-header {
+    padding: calc(0.8 * var(--base-unit)) calc(1 * var(--base-unit));
+    height: calc(8 * var(--base-unit));
+  }
+
+  .chat-header h3 {
+    font-size: var(--font-size-base);
+  }
+
+  .chat-messages {
+    padding: calc(1 * var(--base-unit));
+    height: calc(100vh - 16 * var(--base-unit));
+  }
+
+  .message {
+    padding: calc(0.5 * var(--base-unit)) calc(0.8 * var(--base-unit));
+    font-size: calc(0.8 * var(--base-unit));
+    margin-bottom: calc(0.5 * var(--base-unit));
+  }
+
+  .chat-input-container {
+    padding: calc(0.8 * var(--base-unit)) calc(1 * var(--base-unit));
+    gap: calc(0.5 * var(--base-unit));
+    height: calc(8 * var(--base-unit));
+  }
+
+  .chat-input-container input {
+    padding: calc(0.5 * var(--base-unit)) calc(0.8 * var(--base-unit));
+    font-size: calc(0.8 * var(--base-unit));
+  }
+
+  .chat-input-container button {
+    padding: calc(0.5 * var(--base-unit)) calc(1 * var(--base-unit));
+    font-size: calc(0.8 * var(--base-unit));
+    min-width: calc(8 * var(--base-unit));
+  }
+
+  .close-button {
+    width: calc(6 * var(--base-unit));
+    height: calc(6 * var(--base-unit));
+    font-size: calc(1.5 * var(--base-unit));
+  }
+
+  /* Títulos de sección compactos */
+  .section-header h2 {
+    font-size: var(--font-size-xl);
+    margin-bottom: calc(0.5 * var(--base-unit));
+    width: 100%;
+  }
+
+  .section-header p {
+    font-size: calc(0.8 * var(--base-unit));
+    padding: 0 calc(0.5 * var(--base-unit));
+    width: 100%;
+  }
+
+  /* About section ajustado al ancho del móvil */
+  .about-features {
+    display: flex;
+    flex-direction: row;
+    gap: calc(0.5 * var(--base-unit));
+    padding: calc(0.5 * var(--base-unit));
+    overflow: visible;
+    justify-content: space-between;
+    width: 100vw;
+    max-width: 100vw;
+  }
+
+  .feature-item {
+    flex: 1;
+    padding: calc(0.8 * var(--base-unit));
+    min-width: 0;
+    max-width: calc(25 * var(--base-unit));
+  }
+
+  .feature-item h4 {
+    font-size: calc(0.8 * var(--base-unit));
+    margin-bottom: calc(0.3 * var(--base-unit));
+    width: 100%;
+  }
+
+  .feature-item p {
+    font-size: calc(0.6 * var(--base-unit));
+    line-height: 1.2;
+    width: 100%;
+  }
+
+  .feature-icon {
+    font-size: calc(2 * var(--base-unit));
+    margin-bottom: calc(0.5 * var(--base-unit));
+  }
+
+  /* Contact section en horizontal con tamaños iguales */
+  .contact-container {
+    grid-template-columns: 1fr 1fr;
+    gap: calc(1 * var(--base-unit));
+    padding: 0 calc(0.5 * var(--base-unit));
+    width: 100vw;
+    max-width: 100vw;
+  }
+
+  .contact-form-section,
+  .calendly-section {
+    width: 100%;
+    max-width: calc(45 * var(--base-unit));
+  }
+
+  .contact-form-section h3,
+  .calendly-section h3 {
+    font-size: calc(1 * var(--base-unit));
+    margin-bottom: calc(0.5 * var(--base-unit));
+    width: 100%;
+  }
+
+  .calendly-section p {
+    font-size: calc(0.7 * var(--base-unit));
+    margin-bottom: calc(0.5 * var(--base-unit));
+    width: 100%;
+  }
+
+  .calendly-inline-widget {
+    width: 100%;
+    min-width: auto;
+    height: calc(32 * var(--base-unit)); /* Alto pero proporcional para pantallas muy pequeñas */
+    max-width: 100%;
+  }
+
+  /* Reducir zoom interno del Calendly SOLO en móvil */
+  .calendly-inline-widget iframe {
+    transform: scale(0.6);
+    transform-origin: top left;
+    width: 166.67%; /* Compensar el scale */
+    height: 166.67%; /* Compensar el scale */
+  }
+
+  /* Formulario compacto */
+  .contact-form {
+    padding: calc(0.8 * var(--base-unit));
+    width: 100%;
+    max-width: 100%;
+    height: calc(30 * var(--base-unit)); /* Misma altura que Calendly */
+  }
+
+  .form-group {
+    margin-bottom: calc(0.6 * var(--base-unit));
+    width: 100%;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    padding: calc(0.4 * var(--base-unit));
+    font-size: calc(0.7 * var(--base-unit));
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .form-group textarea {
+    min-height: calc(3 * var(--base-unit));
+  }
+
+  #submitBtn {
+    padding: calc(0.4 * var(--base-unit));
+    font-size: calc(0.7 * var(--base-unit));
+    width: 100%;
+  }
+
+  /* About content compacto */
+  .about-description {
+    font-size: calc(0.8 * var(--base-unit));
+    line-height: 1.3;
+    margin-bottom: calc(1 * var(--base-unit));
+    width: 100%;
+  }
+
+  .highlight-text {
+    font-size: calc(1 * var(--base-unit));
+    line-height: 1.3;
+    margin-bottom: calc(0.8 * var(--base-unit));
+    width: 100%;
+  }
+
+  .results-intro {
+    font-size: calc(0.8 * var(--base-unit));
+    margin-bottom: calc(0.5 * var(--base-unit));
+    width: 100%;
+  }
+
+  /* Ajustar contenedores principales */
+  .seccion {
+    padding: calc(0.8 * var(--base-unit)) calc(0.5 * var(--base-unit)); /* Menos padding vertical */
+    width: 100vw;
+    max-width: 100vw;
+  }
+
+  .contenido {
+    width: 100vw;
+    max-width: 100vw;
+  }
+
+  /* Asegurar que todos los elementos respeten el ancho */
+  * {
+    box-sizing: border-box;
+  }
+}
+
+/* Media query para pantallas muy pequeñas */
+@media (max-width: 480px) {
+  :root {
+    --base-unit: 2.5vw; /* Unidad base para pantallas muy pequeñas */
+  }
+
+  .hero {
+    height: 50vh; /* Aún más compacto para pantallas pequeñas */
+  }
+
+  .hero h1 {
+    font-size: var(--font-size-xl);
+  }
+
+  .slogan-highlight {
+    font-size: var(--font-size-base);
+  }
+
+  .proyecto-card {
+    width: calc(18 * var(--base-unit));
+    height: calc(28 * var(--base-unit));
+    max-width: calc(22 * var(--base-unit));
+  }
+
+  .footer-section {
+    padding: calc(0.3 * var(--base-unit));
+    max-width: calc(15 * var(--base-unit)); /* Menos ancho */
+  }
+
+  .feature-item {
+    padding: calc(0.6 * var(--base-unit));
+    max-width: calc(22 * var(--base-unit));
+  }
+
+  .chat-button {
+    width: calc(7 * var(--base-unit));
+    height: calc(7 * var(--base-unit));
+  }
+
+  .chat-icon {
+    width: calc(4 * var(--base-unit));
+    height: calc(4 * var(--base-unit));
+  }
+
+  .social-link {
+    width: calc(5 * var(--base-unit));
+    height: calc(5 * var(--base-unit));
+  }
+
+  .social-link i {
+    font-size: calc(0.8 * var(--base-unit));
+  }
+
+  .calendly-inline-widget {
+    height: calc(30 * var(--base-unit)); /* Más alto para pantallas muy pequeñas */
+  }
+
+  .calendly-inline-widget iframe {
+    transform: scale(0.5);
+    transform-origin: top left;
+    width: 200%; /* Compensar el scale */
+    height: 200%; /* Compensar el scale */
+  }
+
+  .contact-form {
+    height: calc(18 * var(--base-unit));
+  }
+
+  .contact-form-section,
+  .calendly-section {
+    max-width: calc(40 * var(--base-unit));
   }
 } 
