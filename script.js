@@ -10,9 +10,9 @@ const headerChatLink = document.getElementById('headerChatLink');
 const footerChatLink = document.getElementById('footerChatLink');
 
 // Sounds
-const notificationSound = new Audio('assets/FX.mp3');
-const clickSound = new Audio('assets/click.mp3');
-const chatSound = new Audio('assets/chat.mp3');
+const notificationSound = new Audio('assets/sounds/FX.mp3');
+const clickSound = new Audio('assets/sounds/click.mp3');
+const chatSound = new Audio('assets/sounds/chat.mp3');
 notificationSound.volume = 0.5;
 clickSound.volume = 0.3;
 
@@ -240,32 +240,32 @@ const nextBtn = document.querySelector('.next-btn');
 
 // Datos de los servicios
 const serviciosData = {
-  'Asistente Virtual': {
+  'Recepcionista Digital: Mails Automatizados': {
     images: [
-      { src: 'assets/ai-icon.png', text: 'Sistema de precios dinámicos que aumenta el RevPAR en un 9% mediante análisis de demanda en tiempo real.' },
-      { src: 'assets/ai-icon.png', text: 'Optimización automática de tarifas basada en ocupación, temporada y competencia.' },
-      { src: 'assets/ai-icon.png', text: 'Predicción de demanda y ajuste proactivo de precios para maximizar ingresos.' }
+      { src: 'assets/images/ai-icon.png', text: 'Sistema de precios dinámicos que aumenta el RevPAR en un 9 % mediante análisis de demanda en tiempo real.' },
+      { src: 'assets/images/ai-icon.png', text: 'Optimización automática de tarifas basada en ocupación, temporada y competencia.' },
+      { src: 'assets/images/ai-icon.png', text: 'Predicción de demanda y ajuste proactivo de precios para maximizar ingresos.' }
     ]
   },
-  'Upselling Inteligente': {
+  'Recepcionista Digital: Whatsapp Automatizado': {
     images: [
-      { src: 'assets/ai-icon.png', text: 'Recomendaciones personalizadas que aumentan las ventas adicionales en un 50%.' },
-      { src: 'assets/ai-icon.png', text: 'Análisis de preferencias de clientes para ofertas personalizadas de servicios premium.' },
-      { src: 'assets/ai-icon.png', text: 'Sistema de fidelización automático con recompensas personalizadas.' }
+      { src: 'assets/images/ai-icon.png', text: 'Recomendaciones personalizadas que aumentan las ventas adicionales en un 50 %.' },
+      { src: 'assets/images/ai-icon.png', text: 'Análisis de preferencias de clientes para ofertas personalizadas de servicios premium.' },
+      { src: 'assets/images/ai-icon.png', text: 'Sistema de fidelización automático con recompensas personalizadas.' }
+    ]
+  },
+  'Recepcionista Digital: Ventas Complementarias Inteligentes': {
+    images: [
+      { src: 'assets/images/ai-icon.png', text: 'Personalización de la experiencia que aumenta la conversión en el canal directo en un 30 %.' },
+      { src: 'assets/images/ai-icon.png', text: 'Optimización de la página web y proceso de reserva para maximizar conversiones.' },
+      { src: 'assets/images/ai-icon.png', text: 'Sistema de retargeting inteligente para recuperar abandonos.' }
     ]
   },
   'Reportes Inteligentes': {
     images: [
-      { src: 'assets/ai-icon.png', text: 'Personalización de la experiencia que aumenta la conversión en el canal directo en un 30%.' },
-      { src: 'assets/ai-icon.png', text: 'Optimización de la página web y proceso de reserva para maximizar conversiones.' },
-      { src: 'assets/ai-icon.png', text: 'Sistema de retargeting inteligente para recuperar abandonos.' }
-    ]
-  },
-  'Automatización de Correos': {
-    images: [
-      { src: 'assets/ai-icon.png', text: 'Reducción del 65% en tareas manuales mediante automatización inteligente.' },
-      { src: 'assets/ai-icon.png', text: 'Gestión automática de inventario, limpieza y mantenimiento.' },
-      { src: 'assets/ai-icon.png', text: 'Optimización de recursos y personal basada en IA.' }
+      { src: 'assets/images/ai-icon.png', text: 'Reducción del 65 % en tareas manuales mediante automatización inteligente.' },
+      { src: 'assets/images/ai-icon.png', text: 'Gestión automática de inventario, limpieza y mantenimiento.' },
+      { src: 'assets/images/ai-icon.png', text: 'Optimización de recursos y personal basada en IA.' }
     ]
   }
 };

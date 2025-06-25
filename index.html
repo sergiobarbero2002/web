@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>SmartHotels</title>
-  <link rel="icon" type="image/png" href="assets/ai-icon.png">
+  <link rel="icon" type="image/png" href="assets/images/ai-icon.png">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
@@ -15,7 +15,7 @@
 
   <div class="floating-chat">
     <button id="chatButton" class="chat-button">
-      <img src="assets/ai-icon.png" alt="Asistente IA" class="chat-icon">
+      <img src="assets/images/ai-icon.png" alt="Asistente IA" class="chat-icon">
     </button>
     <div id="chatBubble" class="chat-bubble">¿Necesitas ayuda con tu hotel?<br>¡Chatea con nuestra IA!</div>
   </div>
@@ -23,7 +23,7 @@
   <div id="chatModal" class="chat-modal">
     <div class="chat-modal-content">
       <div class="chat-header">
-        <h3><img src="assets/ai-icon.png" alt="AI Icon">SmartHotels IA</h3>
+        <h3><img src="assets/images/ai-icon.png" alt="AI Icon">SmartHotels IA</h3>
         <button id="closeChat" class="close-button">&times;</button>
       </div>
       <div id="chatMessages" class="chat-messages"></div>
@@ -115,12 +115,10 @@
           <span class="letter">o</span>
           <span class="letter">s</span>
         </h2>
+        <p>Innovación y resultados medibles para tu negocio hotelero</p>
       </div>
       <div class="about-content">
         <div class="about-main">
-          <p class="highlight-text">Optimizamos hoteles con IA: procesos automatizados, upselling inteligente y clientes más satisfechos.</p>
-          <p class="about-description">
-            <span class="results-intro">Resultados demostrados en hoteles líderes:</span>
           <div class="about-features">
             <div class="feature-item">
               <div class="feature-icon">📈</div>
@@ -160,54 +158,69 @@
           <span class="letter">o</span>
           <span class="letter">s</span>
         </h2>
+        <p>Soluciones inteligentes que transforman la gestión hotelera</p>
       </div>
       <div class="projects-container">
         <div class="proyectos-carousel">
           <div class="proyectos-track">
+
             <div class="proyecto-card">
-              <div class="proyecto-media">
-                <img src="assets/ai-icon.png" alt="Asistente Virtual" loading="lazy">
-              </div>
               <div class="proyecto-info">
-                <h3>Asistente Virtual</h3>
+                <div class="proyecto-media">
+                  <img src="assets/images/correos.png"
+                       alt="Recepcionista Digital: Mails Automatizados"
+                       loading="lazy">
+                </div>
+                <h3>Recepcionista Digital: Mails Automatizados</h3>
+                <p>Sistema inteligente personalizado que clasifica y genera respuestas por email según las políticas del hotel.</p>
+              </div>
+            </div>
+      
+            <div class="proyecto-card">
+              <div class="proyecto-info">
+                <div class="proyecto-media">
+                  <img src="assets/images/chat.png"
+                       alt="Recepcionista Digital: Whatsapp Automatizado"
+                       loading="lazy">
+                </div>
+                <h3>Recepcionista Digital: Whatsapp Automatizado</h3>
                 <p>Sistema inteligente de gestión de huéspedes, reservas y posibles clientes automático.</p>
               </div>
             </div>
+      
             <div class="proyecto-card">
-              <div class="proyecto-media">
-                <img src="assets/ai-icon.png" alt="Upselling Inteligente" loading="lazy">
-              </div>
               <div class="proyecto-info">
-                <h3>Upselling Inteligente</h3>
+                <div class="proyecto-media">
+                  <img src="assets/images/catalogo.png"
+                       alt="Recepcionista Digital: Ventas Complementarias Inteligentes"
+                       loading="lazy">
+                </div>
+                <h3>Recepcionista Digital: Ventas Complementarias Inteligentes</h3>
                 <p>Recomendaciones personalizadas que aumentan el ticket medio de forma natural y la conversión.</p>
               </div>
             </div>
+      
             <div class="proyecto-card">
-              <div class="proyecto-media">
-                <img src="assets/ai-icon.png" alt="Gestión de Habitaciones" loading="lazy">
-              </div>
               <div class="proyecto-info">
+                <div class="proyecto-media">
+                  <img src="assets/images/reporte.png"
+                       alt="Reportes Inteligentes"
+                       loading="lazy">
+                </div>
                 <h3>Reportes Inteligentes</h3>
                 <p>Informes periódicos que detectan cuellos de botella y oportunidades de mejora para optimizar procesos y maximizar beneficios.</p>
               </div>
             </div>
-            <div class="proyecto-card">
-              <div class="proyecto-media">
-                <img src="assets/ai-icon.png" alt="Automatización de Correos" loading="lazy">
-              </div>
-              <div class="proyecto-info">
-                <h3>Automatización de Correos</h3>
-                <p>Sistema inteligente personalizado que clasifica y genera respuestas por email según las políticas del hotel.</p>
-              </div>
-            </div>
           </div>
         </div>
+      </div>
+      
         
         <div id="projectGallery" class="project-gallery">
           <button class="close-gallery">&times;</button>
           <div class="gallery-content">
             <div class="gallery-image-container">
-              <img src="assets/ai-icon.png" alt="Imagen del servicio" id="projectImage">
+              <img src="assets/images/ai-icon.png" alt="Imagen del servicio" id="projectImage">
             </div>
             <div class="gallery-info">
               <h3 id="projectTitle"></h3>
