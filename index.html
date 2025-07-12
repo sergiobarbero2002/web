@@ -9,39 +9,14 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script src="components/include.js"></script>
 </head>
 <body>
+  <!-- Partículas independientes -->
   <div id="particles-js"></div>
-
-  <div class="floating-chat">
-    <button id="chatButton" class="chat-button">
-      <img src="assets/images/ai-icon.png" alt="Asistente IA" class="chat-icon">
-    </button>
-    <div id="chatBubble" class="chat-bubble">¿Necesitas ayuda con tu hotel?<br>¡Chatea con nuestra IA!</div>
-  </div>
-
-  <div id="chatModal" class="chat-modal">
-    <div class="chat-modal-content">
-      <div class="chat-header">
-        <h3><img src="assets/images/ai-icon.png" alt="AI Icon">SmartHotels IA</h3>
-        <button id="closeChat" class="close-button">&times;</button>
-      </div>
-      <div id="chatMessages" class="chat-messages"></div>
-      <div class="chat-input-container">
-        <input type="text" id="chatInput" placeholder="Escribe tu pregunta aquí..." maxlength="500">
-        <button id="sendMessage">Enviar</button>
-      </div>
-    </div>
-  </div>
-
-  <header class="main-header">
-    <nav class="nav-container">
-      <a href="#about" class="nav-button">Nosotros</a>
-      <a href="#services" class="nav-button">Servicios</a>
-      <a href="#" class="nav-button" id="headerChatLink">Chatea con nuestra IA</a>
-      <a href="#contacto" class="nav-button">Contacto</a>
-    </nav>
-  </header>
+  
+  <!-- Placeholder para el header -->
+  <div id="header-placeholder"></div>
 
   <main class="contenido">
     <section class="hero">
@@ -215,23 +190,19 @@
         </div>
       </div>
       
-        
-        <div id="projectGallery" class="project-gallery">
-          <button class="close-gallery">&times;</button>
-          <div class="gallery-content">
-            <div class="gallery-image-container">
-              <img src="assets/images/ai-icon.png" alt="Imagen del servicio" id="projectImage">
-            </div>
-            <div class="gallery-info">
-              <h3 id="projectTitle"></h3>
-              <p id="projectDescription">Sistema inteligente de gestión de reservas que optimiza la ocupación y reduce errores.</p>
-            </div>
-          </div>
-          <div class="gallery-navigation">
-            <button class="gallery-nav prev-btn" disabled>&lt;</button>
-            <button class="gallery-nav next-btn">&gt;</button>
-          </div>
-        </div>
+      <!-- Botón de demostración -->
+      <div class="demo-section">
+        <h3 class="demo-title">
+          ¿Quieres ver una muestra?
+        </h3>
+        <p class="demo-description">
+          Descubre cómo transformamos hoteles con IA en menos de 1 minuto.
+        </p>
+        <a href="demo/index.html" class="demo-button">
+          <i class="fas fa-play demo-icon"></i>
+          <span class="demo-text">Ver Demo</span>
+          <div class="demo-glow"></div>
+        </a>
       </div>
     </section>
 
@@ -271,7 +242,7 @@
           </form>
         </div>
         <div class="calendly-section">
-          <h3>Agenda una llamada gratuita</h3>
+          <h3>Agenda una llamada</h3>
           <div class="calendly-inline-widget" data-url="https://calendly.com/sergio-bg-2002/consulta-gratuita"></div>
           <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
         </div>
@@ -279,93 +250,8 @@
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="footer-content">
-      <div class="footer-section">
-        <h3>SmartHotels</h3>
-        <p>Automatización inteligente para hoteles</p>
-        <div class="social-links">
-          <a href="https://www.linkedin.com/company/smarthotels/" class="social-link" target="_blank"><i class="fab fa-linkedin"></i></a>
-        </div>
-      </div>
-
-      <div class="footer-section">
-        <h3>Contacto</h3>
-        <p>Email: contact@smarthotels.es</p>
-      </div>
-
-      <div class="footer-section">
-        <h3>Enlaces Rápidos</h3>
-        <a href="#about">Sobre Nosotros</a>
-        <a href="#services">Servicios</a>
-        <a href="#" id="footerChatLink">Asistente IA</a>
-        <a href="#contacto">Contacto</a>
-      </div>
-
-      <div class="footer-section">
-        <h3>Legal</h3>
-        <a href="#" id="footerPrivacyLink">Política de Privacidad</a>
-      </div>
-    </div>
-
-    <div class="footer-bottom">
-      <p>&copy; 2024 SmartHotels. Todos los derechos reservados.</p>
-    </div>
-  </footer>
-
-  <!-- Privacy Policy Modal -->
-  <div id="privacyModal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2>Política de Privacidad</h2>
-        <button class="close-modal">&times;</button>
-      </div>
-      <div class="modal-body">
-        <h3>Recopilación de Datos</h3>
-        <p>Recopilamos información que nos proporciona directamente, incluyendo:</p>
-        <ul>
-          <li>Nombre e información de contacto</li>
-          <li>Dirección de correo electrónico</li>
-          <li>Cualquier otra información que elija proporcionar</li>
-        </ul>
-
-        <h3>Propósito de la Recopilación de Datos</h3>
-        <p>Utilizamos los datos recopilados para:</p>
-        <ul>
-          <li>Responder a sus consultas</li>
-          <li>Proporcionar nuestros servicios</li>
-          <li>Mejorar nuestros servicios</li>
-          <li>Enviarle actualizaciones y comunicaciones de marketing (con su consentimiento)</li>
-        </ul>
-
-        <h3>Base Legal</h3>
-        <p>Procesamos sus datos basándonos en:</p>
-        <ul>
-          <li>Su consentimiento</li>
-          <li>Nuestros intereses comerciales legítimos</li>
-          <li>Obligaciones legales</li>
-        </ul>
-
-        <h3>Conservación de Datos</h3>
-        <p>Conservamos sus datos durante el tiempo necesario para cumplir los fines para los que fueron recopilados, incluyendo requisitos legales, contables o de informes.</p>
-
-        <h3>Sus Derechos</h3>
-        <p>Tiene derecho a:</p>
-        <ul>
-          <li>Acceder a sus datos personales</li>
-          <li>Corregir datos inexactos</li>
-          <li>Solicitar la eliminación de sus datos</li>
-          <li>Oponerse al procesamiento de datos</li>
-          <li>Portabilidad de datos</li>
-        </ul>
-
-        <h3>Responsable del Tratamiento</h3>
-        <p>SmartHotels<br>
-        Email: contact@smarthotels.es
-        </p>
-      </div>
-    </div>
-  </div>
+  <!-- Placeholder para el footer -->
+  <div id="footer-placeholder"></div>
 
   <!-- Scripts -->
   <script src="script.js"></script>

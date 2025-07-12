@@ -1,13 +1,20 @@
-// Chat variables
-const chatButton = document.getElementById('chatButton');
-const chatBubble = document.getElementById('chatBubble');
-const chatModal = document.getElementById('chatModal');
-const closeChat = document.getElementById('closeChat');
-const chatMessages = document.getElementById('chatMessages');
-const chatInput = document.getElementById('chatInput');
-const sendButton = document.getElementById('sendMessage');
-const headerChatLink = document.getElementById('headerChatLink');
-const footerChatLink = document.getElementById('footerChatLink');
+// Chat variables - se inicializarán después de cargar los componentes
+let chatButton, chatBubble, chatModal, closeChat, chatMessages, chatInput, sendButton;
+
+// Función para inicializar elementos del chat
+function initChatElements() {
+  chatButton = document.getElementById('chatButton');
+  chatBubble = document.getElementById('chatBubble');
+  chatModal = document.getElementById('chatModal');
+  closeChat = document.getElementById('closeChat');
+  chatMessages = document.getElementById('chatMessages');
+  chatInput = document.getElementById('chatInput');
+  sendButton = document.getElementById('sendMessage');
+  
+  if (chatButton && chatBubble && chatModal && closeChat && chatMessages && chatInput && sendButton) {
+    setupChatEvents();
+  }
+}
 
 // Sounds
 const notificationSound = new Audio('assets/sounds/FX.mp3');
@@ -21,32 +28,48 @@ function playClickSound() {
   clickSound.play().catch(() => {});
 }
 
-document.querySelectorAll('a, button, .nav-button, .social-link, .proyecto-card')
-  .forEach(el => el.addEventListener('click', playClickSound));
+// Función para configurar eventos del chat
+function setupChatEvents() {
+  // Eventos de click en elementos interactivos
+  document.querySelectorAll('a, button, .nav-button, .social-link, .proyecto-card')
+    .forEach(el => el.addEventListener('click', playClickSound));
 
-setTimeout(() => {
-  chatBubble.classList.add('visible');
-  notificationSound.play().catch(() => {});
-}, 3000);
+  // Mostrar burbuja de chat después de 3 segundos
+  setTimeout(() => {
+    if (chatBubble) {
+      chatBubble.classList.add('visible');
+      notificationSound.play().catch(() => {});
+    }
+  }, 3000);
 
-document.addEventListener('click', (e) => {
-  if (!chatButton.contains(e.target) && !chatBubble.contains(e.target)) {
-    chatBubble.classList.remove('visible');
-  }
-});
+  // Ocultar burbuja al hacer click fuera
+  document.addEventListener('click', (e) => {
+    if (chatButton && chatBubble && !chatButton.contains(e.target) && !chatBubble.contains(e.target)) {
+      chatBubble.classList.remove('visible');
+    }
+  });
 
-function openChatModal() {
-  chatModal.classList.add('active');
-  chatBubble.classList.remove('visible');
-  chatInput.focus();
+  // Eventos del chat
+  chatButton.addEventListener('click', openChatModal);
+  chatModal.addEventListener('click', (e) => {
+    if (e.target === chatModal) chatModal.classList.remove('active');
+  });
+  closeChat.addEventListener('click', () => chatModal.classList.remove('active'));
+  
+  // Eventos de envío de mensajes
+  sendButton.addEventListener('click', handleChatSubmit);
+  chatInput.addEventListener('keypress', (e) => { 
+    if (e.key === 'Enter') handleChatSubmit(); 
+  });
 }
 
-chatButton.addEventListener('click', openChatModal);
-headerChatLink.addEventListener('click', (e) => { e.preventDefault(); openChatModal(); });
-footerChatLink.addEventListener('click', (e) => { e.preventDefault(); openChatModal(); });
-chatModal.addEventListener('click', (e) => {
-  if (e.target === chatModal) chatModal.classList.remove('active');
-});
+function openChatModal() {
+  if (chatModal && chatBubble && chatInput) {
+    chatModal.classList.add('active');
+    chatBubble.classList.remove('visible');
+    chatInput.focus();
+  }
+}
 
 // Smooth scroll
 function scrollToSectionSmooth(id) {
@@ -54,24 +77,7 @@ function scrollToSectionSmooth(id) {
   if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-// particles.js
-particlesJS("particles-js", {
-  particles: {
-    number: { value: 100, density: { enable: true, value_area: 700 } },
-    color: { value: "#C8A04F" },
-    shape: { type: "circle" },
-    opacity: { value: 1 },
-    size: { value: 4, random: true },
-    line_linked: { enable: true, distance: 120, color: "#C8A04F", opacity: 1, width: 1.75 },
-    move: { enable: true, speed: 1.5 }
-  },
-  interactivity: {
-    detect_on: "window",
-    events: { onhover: { enable: true, mode: "grab" }, onclick: { enable: true, mode: "push" }, resize: true },
-    modes: { grab: { distance: 140, line_linked: { opacity: 1 } }, push: { particles_nb: 4 } }
-  },
-  retina_detect: true
-});
+// Las partículas se inicializan desde components/include.js
 
 // Scroll animation
 function handleScrollAnimation() {
@@ -127,6 +133,8 @@ async function sendToChatGPT(message) {
 }
 
 async function handleChatSubmit() {
+  if (!chatInput || !sendButton) return;
+  
   const message = chatInput.value.trim();
   if (!message) return;
   chatInput.disabled = true;
@@ -144,12 +152,11 @@ async function handleChatSubmit() {
   
   chatInput.disabled = false;
   sendButton.disabled = false;
-  sendButton.textContent = 'Send';
+  sendButton.textContent = 'Enviar';
   chatInput.focus();
 }
 
-sendButton.addEventListener('click', handleChatSubmit);
-chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleChatSubmit(); });
+// Los eventos del chat se configuran en setupChatEvents()
 
 // Contact form submission → via Netlify function
 document.getElementById('contactForm').addEventListener('submit', function(e) {
@@ -229,129 +236,4 @@ chatModal.addEventListener('click', (e) => {
   }
 });
 
-// Project Gallery functionality
-const projectGallery = document.getElementById('projectGallery');
-const closeGallery = document.querySelector('.close-gallery');
-const projectImage = document.getElementById('projectImage');
-const projectTitle = document.getElementById('projectTitle');
-const projectDescription = document.getElementById('projectDescription');
-const prevBtn = document.querySelector('.prev-btn');
-const nextBtn = document.querySelector('.next-btn');
-
-// Datos de los servicios
-const serviciosData = {
-  'Recepcionista Digital: Mails Automatizados': {
-    images: [
-      { src: 'assets/images/ai-icon.png', text: 'Sistema de precios dinámicos que aumenta el RevPAR en un 9 % mediante análisis de demanda en tiempo real.' },
-      { src: 'assets/images/ai-icon.png', text: 'Optimización automática de tarifas basada en ocupación, temporada y competencia.' },
-      { src: 'assets/images/ai-icon.png', text: 'Predicción de demanda y ajuste proactivo de precios para maximizar ingresos.' }
-    ]
-  },
-  'Recepcionista Digital: Whatsapp Automatizado': {
-    images: [
-      { src: 'assets/images/ai-icon.png', text: 'Recomendaciones personalizadas que aumentan las ventas adicionales en un 50 %.' },
-      { src: 'assets/images/ai-icon.png', text: 'Análisis de preferencias de clientes para ofertas personalizadas de servicios premium.' },
-      { src: 'assets/images/ai-icon.png', text: 'Sistema de fidelización automático con recompensas personalizadas.' }
-    ]
-  },
-  'Recepcionista Digital: Ventas Complementarias Inteligentes': {
-    images: [
-      { src: 'assets/images/ai-icon.png', text: 'Personalización de la experiencia que aumenta la conversión en el canal directo en un 30 %.' },
-      { src: 'assets/images/ai-icon.png', text: 'Optimización de la página web y proceso de reserva para maximizar conversiones.' },
-      { src: 'assets/images/ai-icon.png', text: 'Sistema de retargeting inteligente para recuperar abandonos.' }
-    ]
-  },
-  'Reportes Inteligentes': {
-    images: [
-      { src: 'assets/images/ai-icon.png', text: 'Reducción del 65 % en tareas manuales mediante automatización inteligente.' },
-      { src: 'assets/images/ai-icon.png', text: 'Gestión automática de inventario, limpieza y mantenimiento.' },
-      { src: 'assets/images/ai-icon.png', text: 'Optimización de recursos y personal basada en IA.' }
-    ]
-  }
-};
-
-let currentService = null;
-let currentImageIndex = 0;
-
-// Función para abrir la galería
-function openGallery(serviceTitle) {
-  currentService = serviceTitle;
-  currentImageIndex = 0;
-  updateGallery();
-  projectGallery.classList.add('active');
-  playClickSound();
-}
-
-// Función para actualizar la galería
-function updateGallery() {
-  const service = serviciosData[currentService];
-  const imageData = service.images[currentImageIndex];
-  
-  projectTitle.textContent = currentService;
-  projectImage.src = imageData.src;
-  projectDescription.textContent = imageData.text;
-  
-  // Actualizar estado de los botones
-  prevBtn.disabled = currentImageIndex === 0;
-  nextBtn.disabled = currentImageIndex === service.images.length - 1;
-}
-
-// Función para mostrar imagen anterior
-function showPrevImage() {
-  if (currentImageIndex > 0) {
-    currentImageIndex--;
-    updateGallery();
-    playClickSound();
-  }
-}
-
-// Función para mostrar siguiente imagen
-function showNextImage() {
-  const service = serviciosData[currentService];
-  if (currentImageIndex < service.images.length - 1) {
-    currentImageIndex++;
-    updateGallery();
-    playClickSound();
-  }
-}
-
-// Función para cerrar la galería
-function closeProjectGallery() {
-  projectGallery.classList.remove('active');
-  playClickSound();
-}
-
-// Event listeners para los botones de navegación
-prevBtn.addEventListener('click', showPrevImage);
-nextBtn.addEventListener('click', showNextImage);
-
-// Event listeners para las tarjetas de proyecto
-document.querySelectorAll('.proyecto-card').forEach(card => {
-  card.addEventListener('click', () => {
-    const title = card.querySelector('h3').textContent;
-    openGallery(title);
-  });
-});
-
-// Event listener para cerrar la galería
-closeGallery.addEventListener('click', closeProjectGallery);
-
-// Cerrar galería al hacer clic fuera
-projectGallery.addEventListener('click', (e) => {
-  if (e.target === projectGallery) {
-    closeProjectGallery();
-  }
-});
-
-// Keyboard navigation
-document.addEventListener('keydown', (e) => {
-  if (projectGallery.classList.contains('active')) {
-    if (e.key === 'ArrowLeft') {
-      showPrevImage();
-    } else if (e.key === 'ArrowRight') {
-      showNextImage();
-    } else if (e.key === 'Escape') {
-      closeProjectGallery();
-    }
-  }
-});
+// Funcionalidad eliminada - ya no hay galería de proyectos

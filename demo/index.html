@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SmartHotels Demo - Automatización Hotelera Inteligente</title>
+  <link rel="icon" type="image/png" href="../assets/images/ai-icon.png">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script src="../components/include.js"></script>
+</head>
+<body>
+  <!-- Partículas independientes -->
+  <div id="particles-js"></div>
+  
+  <!-- Placeholder para el header -->
+  <div id="header-placeholder"></div>
+  
+  <main class="contenido">
+    <section id="demo" class="seccion">
+      <div class="section-header" style="margin-bottom: 1rem;">
+        <h2>
+          <span class="letter">D</span>
+          <span class="letter">e</span>
+          <span class="letter">m</span>
+          <span class="letter">o</span>
+        </h2>
+        <p>Descubre cómo transformamos hoteles con IA</p>
+      </div>
+      
+      <div class="demo-container" style="max-width: 1400px; margin: 0 auto; padding: 1rem;">
+        <div style="display: grid; grid-template-columns: 7fr 3fr; gap: 2rem; align-items: start;">
+          
+          <!-- Video de YouTube -->
+          <div style="width: 100%;">
+            <h3 style="text-align: center; margin-bottom: 1rem; color: #C8A04F;">Video Demo</h3>
+            <div style="position: relative; width: 100%; height: 500px; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+              <iframe 
+                src="https://www.youtube.com/embed/k32jLivD8EA?autoplay=1&mute=0&controls=1&rel=0&modestbranding=1&showinfo=0&loop=1&playlist=k32jLivD8EA" 
+                title="SmartHotels Demo"
+                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+              </iframe>
+            </div>
+          </div>
+
+          <!-- Calendly -->
+          <div style="width: 100%; min-width: 150px;">
+            <h3 style="text-align: center; margin-bottom: 1rem; color: #C8A04F;">Llámanos</h3>
+            <div class="calendly-inline-widget" 
+                 data-url="https://calendly.com/sergio-bg-2002/consulta-gratuita"
+                 style="min-width:300px;height:400px;">
+            </div>
+            <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Placeholder para el footer -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Scripts -->
+  <script src="../script.js"></script>
+
+      <style>
+      /* Redondear esquinas de la sección demo */
+      #demo.seccion {
+        border-radius: 20px !important;
+        overflow: hidden;
+      }
+      
+      #demo.seccion::before {
+        border-radius: 20px !important;
+      }
+      
+      /* Asegurar que video y calendly tengan la misma altura */
+      .demo-container .calendly-inline-widget {
+        height: 500px !important;
+        min-height: 500px !important;
+      }
+      
+      /* Estilos responsive para móviles */
+      @media (max-width: 768px) {
+        .demo-container > div {
+          display: flex !important;
+          flex-direction: column !important;
+          align-items: center !important;
+          gap: 1.5rem !important;
+        }
+        
+        .demo-container > div > div:first-child {
+          max-width: 800px !important;
+        }
+        
+        .demo-container > div > div:last-child {
+          max-width: 400px !important;
+        }
+        
+        .demo-container .calendly-inline-widget {
+          min-width: 200px !important;
+        }
+        
+        .demo-container {
+          padding: 0.5rem !important;
+          max-width: 100% !important;
+        }
+        
+        #demo.seccion {
+          border-radius: 15px !important;
+        }
+        
+        #demo.seccion::before {
+          border-radius: 15px !important;
+        }
+        
+        /* En móviles, ajustar altura para mejor visualización */
+        .demo-container .calendly-inline-widget {
+          height: 350px !important;
+          min-height: 350px !important;
+        }
+        
+        .demo-container > div > div:first-child > div:last-child {
+          height: 350px !important;
+        }
+        
+        /* Ajustar títulos para móviles */
+        .demo-container h3 {
+          font-size: 1rem !important;
+          margin-bottom: 0.5rem !important;
+        }
+      }
+    </style>
+</body>
+</html>
+
