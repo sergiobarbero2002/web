@@ -16,6 +16,13 @@ async function loadComponent(elementId, componentPath) {
         }
       }, 100);
     }
+    
+    // Notificar cuando el footer se haya cargado
+    if (elementId === 'footer-placeholder') {
+      console.log('🦶 Footer cargado, modal de privacidad disponible');
+      // Disparar un evento personalizado para notificar que el footer está listo
+      document.dispatchEvent(new CustomEvent('footerLoaded'));
+    }
   } catch (error) {
     console.error('Error cargando componente:', error);
   }

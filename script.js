@@ -68,6 +68,14 @@ function openChatModal() {
     chatModal.classList.add('active');
     chatBubble.classList.remove('visible');
     chatInput.focus();
+    
+    // Añadir efecto de pulso al botón
+    if (chatButton) {
+      chatButton.classList.add('pulse');
+      setTimeout(() => {
+        chatButton.classList.remove('pulse');
+      }, 1000);
+    }
   }
 }
 
@@ -143,7 +151,13 @@ async function handleChatSubmit() {
   addMessage(message, true);
   chatInput.value = '';
   
+  // Mostrar indicador de escritura
+  showTypingIndicator();
+  
   const reply = await sendToChatGPT(message);
+  
+  // Ocultar indicador de escritura
+  hideTypingIndicator();
   
   // Agregar tanto el mensaje del usuario como la respuesta al historial
   chatHistory.push({ role: 'user', content: message });
@@ -154,6 +168,25 @@ async function handleChatSubmit() {
   sendButton.disabled = false;
   sendButton.textContent = 'Enviar';
   chatInput.focus();
+}
+
+function showTypingIndicator() {
+  const typingIndicator = document.createElement('div');
+  typingIndicator.className = 'typing-indicator';
+  typingIndicator.innerHTML = `
+    <div class="typing-dot"></div>
+    <div class="typing-dot"></div>
+    <div class="typing-dot"></div>
+  `;
+  chatMessages.appendChild(typingIndicator);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function hideTypingIndicator() {
+  const typingIndicator = chatMessages.querySelector('.typing-indicator');
+  if (typingIndicator) {
+    typingIndicator.remove();
+  }
 }
 
 // Los eventos del chat se configuran en setupChatEvents()
@@ -203,24 +236,130 @@ document.querySelectorAll('.nav-button').forEach(btn => {
   });
 });
 
-// Modal privacidad
-const privacyModal = document.getElementById('privacyModal');
-const privacyLink = document.getElementById('privacyLink');
-const footerPrivacyLink = document.getElementById('footerPrivacyLink');
-const closeModal = document.querySelector('.close-modal');
+// Modal privacidad - inicialización diferida
+function initPrivacyModal() {
+  const privacyModal = document.getElementById('privacyModal');
+  const privacyLink = document.getElementById('privacyLink');
+  const footerPrivacyLink = document.getElementById('footerPrivacyLink');
+  const closeModal = document.querySelector('.close-modal');
 
-function openPrivacyModal() {
-  privacyModal.style.display = 'block';
-  document.body.style.overflow = 'hidden';
+  if (!privacyModal || !privacyLink || !footerPrivacyLink || !closeModal) {
+    // Si no están disponibles, reintentar en 100ms
+    setTimeout(initPrivacyModal, 100);
+    return;
+  }
+
+  function openPrivacyModal() {
+    privacyModal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+  }
+  
+  function closePrivacyModal() {
+    privacyModal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+  }
+  
+  privacyLink.addEventListener('click', (e) => { 
+    e.preventDefault(); 
+    openPrivacyModal(); 
+  });
+  
+  footerPrivacyLink.addEventListener('click', (e) => { 
+    e.preventDefault(); 
+    openPrivacyModal(); 
+  });
+  
+  closeModal.addEventListener('click', closePrivacyModal);
+  window.addEventListener('click', (e) => { 
+    if (e.target === privacyModal) {
+      closePrivacyModal(); 
+    }
+  });
 }
-function closePrivacyModal() {
-  privacyModal.style.display = 'none';
-  document.body.style.overflow = 'auto';
+
+// Inicializar modal de privacidad cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(initPrivacyModal, 500);
+});
+
+// IntersectionObserver para animaciones de scroll
+function initIntersectionObserver() {
+  // Opciones del observer
+  const observerOptions = {
+    root: null, // viewport
+    rootMargin: '0px 0px -50px 0px', // trigger cuando el elemento esté 50px antes del viewport
+    threshold: 0.1 // trigger cuando al menos 10% del elemento sea visible
+  };
+
+  // Callback del observer
+  const observerCallback = (entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        // Añadir clase de animación cuando el elemento entre en el viewport
+        entry.target.classList.add('animate-in');
+        
+        // Opcional: dejar de observar después de la primera animación
+        observer.unobserve(entry.target);
+      }
+    });
+  };
+
+  // Crear el observer
+  const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+  // Elementos a observar
+  const sectionsToAnimate = [
+    '.hero',
+    '.seccion',
+    '.section-header',
+    '.about-content',
+    '.about-features',
+    '.feature-item',
+    '.proyectos-carousel',
+    '.proyecto-card',
+    '.contact-container',
+    '.contact-form-section',
+    '.calendly-section',
+    '.demo-section'
+  ];
+
+  // Observar cada tipo de elemento
+  sectionsToAnimate.forEach(selector => {
+    const elements = document.querySelectorAll(selector);
+    elements.forEach(element => {
+      // Añadir clase inicial para el estado oculto
+      element.classList.add('scroll-animate');
+      observer.observe(element);
+    });
+  });
+
+  // Animación especial para feature items con delay escalonado
+  const featureItems = document.querySelectorAll('.feature-item');
+  featureItems.forEach((item, index) => {
+    item.style.animationDelay = `${index * 0.1}s`;
+  });
+
+  // Animación especial para proyecto cards con delay escalonado
+  const proyectoCards = document.querySelectorAll('.proyecto-card');
+  proyectoCards.forEach((card, index) => {
+    card.style.animationDelay = `${index * 0.15}s`;
+  });
 }
-privacyLink.addEventListener('click', (e) => { e.preventDefault(); openPrivacyModal(); });
-footerPrivacyLink.addEventListener('click', (e) => { e.preventDefault(); openPrivacyModal(); });
-closeModal.addEventListener('click', closePrivacyModal);
-window.addEventListener('click', (e) => { if (e.target === privacyModal) closePrivacyModal(); });
+
+// Inicializar IntersectionObserver cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', () => {
+  initIntersectionObserver();
+});
+
+// También inicializar cuando se carguen componentes dinámicos
+window.addEventListener('load', () => {
+  setTimeout(initIntersectionObserver, 100);
+});
+
+// También intentar inicializar después de un tiempo adicional por si acaso
+setTimeout(() => {
+  initPrivacyModal();
+}, 2000);
 
 // Limpiar historial al cerrar
 closeChat.addEventListener('click', () => {
