@@ -58,6 +58,78 @@
           </div>
 
         </div>
+        
+        <!-- Componente de Presentación de Slides -->
+        <div class="slideshow-section" style="margin-top: 3rem;">
+          <h3 style="text-align: center; margin-bottom: 2rem; color: #C8A04F; font-size: 1.8rem;">Presentación de la Demo</h3>
+          
+          <!-- Contenedor principal del slideshow -->
+          <div class="slideshow-container">
+            <!-- Contenedor de slides -->
+            <div class="slides-wrapper">
+              <div class="slide active" data-slide="0">
+                <img src="../assets/images/slides/1.png" alt="SmartHotels - Sistema de Gestión Hotelera">
+                <div class="slide-caption">
+                </div>
+              </div>
+              
+              <div class="slide" data-slide="1">
+                <img src="../assets/images/slides/2.png" alt="Recepción Inteligente SmartHotels">
+                <div class="slide-caption">
+                </div>
+              </div>
+              
+              <div class="slide" data-slide="2">
+                <img src="../assets/images/slides/3.png" alt="Habitaciones Inteligentes">
+                <div class="slide-caption">
+                </div>
+              </div>
+              
+              <div class="slide" data-slide="3">
+                <img src="../assets/images/slides/4.png" alt="Restaurante Gourmet Automatizado">
+                <div class="slide-caption">
+                </div>
+              </div>
+              
+              <div class="slide" data-slide="4">
+                <img src="../assets/images/slides/5.png" alt="Spa y Wellness Inteligente">
+                <div class="slide-caption">
+                </div>
+              </div>
+              
+              <div class="slide" data-slide="5">
+                <img src="../assets/images/slides/6.png" alt="Análisis de Datos en Tiempo Real">
+                <div class="slide-caption">
+                </div>
+              </div>
+              
+              <div class="slide" data-slide="6">
+                <img src="../assets/images/slides/7.png" alt="Experiencia del Cliente Premium">
+                <div class="slide-caption">
+                </div>
+              </div>
+            </div>
+            
+            <!-- Controles de navegación -->
+            <button class="slideshow-nav slideshow-prev" aria-label="Slide anterior">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="slideshow-nav slideshow-next" aria-label="Slide siguiente">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+            
+            <!-- Contador de slides -->
+            <div class="slideshow-counter">
+              <span class="current-slide">1</span>
+              <span class="separator">/</span>
+              <span class="total-slides">7</span>
+            </div>
+            
+
+            
+
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -67,6 +139,90 @@
 
   <!-- Scripts -->
   <script src="../script.js"></script>
+  
+  <!-- Script del slideshow directamente en el HTML -->
+  <script>
+    // Slideshow ultra simple
+    console.log('🎠 Script del slideshow cargado');
+    
+    function initSlideshow() {
+      console.log('🎠 Iniciando slideshow...');
+      
+      const slides = document.querySelectorAll('.slide');
+      const prevBtn = document.querySelector('.slideshow-prev');
+      const nextBtn = document.querySelector('.slideshow-next');
+      
+      console.log('🎠 Elementos encontrados:', {
+        slides: slides.length,
+        prevBtn: !!prevBtn,
+        nextBtn: !!nextBtn
+      });
+      
+      if (slides.length === 0) {
+        console.log('🎠 No hay slides');
+        return false;
+      }
+      
+      if (!prevBtn || !nextBtn) {
+        console.log('🎠 No se encontraron los botones');
+        return false;
+      }
+      
+      let currentSlide = 0;
+      const totalSlides = slides.length;
+      
+      function changeSlide(index) {
+        console.log('🎠 Cambiando a slide:', index);
+        
+        // Ocultar todos
+        for (let i = 0; i < slides.length; i++) {
+          slides[i].classList.remove('active');
+        }
+        
+        // Mostrar el actual
+        slides[index].classList.add('active');
+        
+        // Actualizar contador
+        const currentSpan = document.querySelector('.current-slide');
+        if (currentSpan) {
+          currentSpan.textContent = index + 1;
+        }
+        
+        currentSlide = index;
+      }
+      
+      // Evento para flecha izquierda
+      prevBtn.onclick = function(e) {
+        e.preventDefault();
+        console.log('🎠 Click en flecha izquierda');
+        const prevIndex = currentSlide === 0 ? totalSlides - 1 : currentSlide - 1;
+        changeSlide(prevIndex);
+      };
+      
+      // Evento para flecha derecha
+      nextBtn.onclick = function(e) {
+        e.preventDefault();
+        console.log('🎠 Click en flecha derecha');
+        const nextIndex = (currentSlide + 1) % totalSlides;
+        changeSlide(nextIndex);
+      };
+      
+      // Mostrar primer slide
+      changeSlide(0);
+      
+      console.log('🎠 Slideshow listo');
+      return true;
+    }
+    
+    // Intentar inicializar inmediatamente
+    if (!initSlideshow()) {
+      // Si falla, intentar después de un tiempo
+      setTimeout(function() {
+        console.log('🎠 Reintentando...');
+        initSlideshow();
+      }, 1000);
+    }
+  </script>
 
       <style>
       /* Redondear esquinas de la sección demo */

@@ -375,4 +375,101 @@ chatModal.addEventListener('click', (e) => {
   }
 });
 
-// Funcionalidad eliminada - ya no hay galería de proyectos
+// ===== SLIDESHOW ULTRA SIMPLE =====
+
+// Función para inicializar el slideshow
+function initSlideshow() {
+  console.log('🎠 Iniciando slideshow...');
+  
+  // Buscar elementos
+  const slides = document.querySelectorAll('.slide');
+  const prevBtn = document.querySelector('.slideshow-prev');
+  const nextBtn = document.querySelector('.slideshow-next');
+  
+  console.log('🎠 Elementos encontrados:', {
+    slides: slides.length,
+    prevBtn: !!prevBtn,
+    nextBtn: !!nextBtn
+  });
+  
+  // Verificar que todos los elementos existan
+  if (slides.length === 0) {
+    console.log('🎠 No hay slides');
+    return false;
+  }
+  
+  if (!prevBtn || !nextBtn) {
+    console.log('🎠 No se encontraron los botones de navegación');
+    return false;
+  }
+  
+  let currentSlide = 0;
+  const totalSlides = slides.length;
+  
+  // Función para cambiar slide
+  function changeSlide(index) {
+    console.log('🎠 Cambiando a slide:', index);
+    
+    // Ocultar todos
+    for (let i = 0; i < slides.length; i++) {
+      slides[i].classList.remove('active');
+    }
+    
+    // Mostrar el actual
+    slides[index].classList.add('active');
+    
+    currentSlide = index;
+  }
+  
+  // Evento para flecha izquierda
+  prevBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    console.log('🎠 Click en flecha izquierda');
+    const prevIndex = currentSlide === 0 ? totalSlides - 1 : currentSlide - 1;
+    changeSlide(prevIndex);
+  });
+  
+  // Evento para flecha derecha
+  nextBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    console.log('🎠 Click en flecha derecha');
+    const nextIndex = (currentSlide + 1) % totalSlides;
+    changeSlide(nextIndex);
+  });
+  
+  // Mostrar primer slide
+  changeSlide(0);
+  
+  console.log('🎠 Slideshow listo');
+  return true;
+}
+
+// Intentar inicializar cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('🎠 DOM cargado, intentando inicializar slideshow...');
+  if (!initSlideshow()) {
+    // Si falla, intentar de nuevo después de un tiempo
+    setTimeout(function() {
+      console.log('🎠 Reintentando inicialización...');
+      initSlideshow();
+    }, 500);
+  }
+});
+
+// También intentar cuando la página esté completamente cargada
+window.addEventListener('load', function() {
+  console.log('🎠 Página cargada, intentando inicializar slideshow...');
+  if (!initSlideshow()) {
+    // Si falla, intentar de nuevo después de un tiempo
+    setTimeout(function() {
+      console.log('🎠 Reintentando inicialización...');
+      initSlideshow();
+    }, 1000);
+  }
+});
+
+// Inicialización de emergencia después de 2 segundos
+setTimeout(function() {
+  console.log('🎠 Inicialización de emergencia...');
+  initSlideshow();
+}, 2000);
